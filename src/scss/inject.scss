@@ -1,2 +1,90 @@
 @import './mixins';
 
+$text-color: #333333;
+$disabled-text: #F4F4F4;
+$label-text: #C4C4C4;
+$inner-shadow: #B5B5B5;
+$primary: #7B61FF;
+$succes: #5EE48C;
+$error: #FF6161;
+  
+html,
+body {
+  font-family: 'Roboto';
+  font-style: normal;
+  height: 100%;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--text-color);
+  margin: 0;
+}
+body {
+  font-family: "HelveticaNeueCyr", Arial, sans-serif;
+}
+#app {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--main-bg-color);
+  height: 100%;
+}
+.main__wrapper{
+  width: 100%;
+  height: 93%;
+  background-color: #E3E3E3;
+  padding: 30px 80px 10px 80px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.board{
+  background-color: #ffffff;
+  height: 82vh;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px #B5B5B5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.visable{
+  display: block;
+}
+
+.userItem{
+  width: 100%;
+  height: 80px;
+  background-color: #ffffff;
+  font-size: 16px;
+  padding: 25px;
+  box-sizing: border-box;
+}
+.userItem:nth-child(2n){
+  background-color: #F2F2F2;
+}
+a{
+  color: var(--text-color);
+}
+
+
+.task_list{
+  border-radius: 3px;
+  border: solid 1px var(--inner-shadow);
+  margin-bottom: auto;
+}
+
+.pag_buttons{
+ display: flex;
+ flex-direction: row;
+}
+
+.hidden{
+  display: none;
+}
+
