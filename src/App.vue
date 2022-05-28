@@ -1,21 +1,13 @@
 <template>
 	<div class="testWrap">
-		<div style="display: flex;">
-			<Button class="btn primary" inner="button" />
-			<Button class="btn error" inner="button" />
-			<Button class="btn default" inner="button" />
-			<Button class="btn success" inner="button" />
-		</div>
-		
-		<Pagination />
-			Ввод {{inputText}}
-		<Input placeholder="Some text" v-model="inputText" />
-			Выбрао {{selectData}}
-		<Select :list="someList" inner="Имя списка" v-model="selectData" />
-			Выбрао {{dropData}}
-		<Dropdown :list="otherList" inner="Имя списка" v-model="dropData" />
-		<Textarea placeholder="Some text in Area" height="300px" />
-		
+			<div class="linkbtn">
+				<router-link :to="FirstPage" class="lnk"> FirstPage </router-link>
+				<router-link :to="FirstPageID" class="lnk"> FirstPageID </router-link>
+				<router-link :to="SecondPage" class="lnk"> SecondPage </router-link>
+				<router-link :to="ThirdPage" class="lnk"> ThirdPage </router-link>
+			</div>
+			<button class="btn primary" inner="sub link" @click="subLink" > but sub</button>
+			<router-view></router-view>
 	</div>
 </template>
 
@@ -31,12 +23,33 @@ import Textarea from './components/Textarea.vue';
 export default {
     data() {
         return {
-            counter: 5,
-			someList: ["one","two","three","four"],
-			otherList: ["five","six","seven","eight"],
-			inputText: "",
-			selectData: "",
-			dropData: [],
+          counter: 5,
+					someList: ["one","two","three","four"],
+					otherList: ["five","six","seven","eight"],
+					inputText: "",
+					selectData: "",
+					dropData: [],
+					FirstPage: {
+						name: 'FirstPage',
+						params: {
+							id: '123123123'
+						},
+					},
+					FirstPageID: {
+						name: 'FirstPage',
+						params: {
+							id: '456456'
+						},
+					},
+					SecondPage: {
+						path: '/SecondPage',
+					},
+					ThirdPage: {
+						path: '/ThirdPage',
+					},
+					Four: {
+						name: 'Four',
+					},
         };
     },
     computed: {
@@ -48,11 +61,19 @@ export default {
 		
 	},
     mounted() {
+			this.$router.push({
+					name: 'Four',
+				})
     },
     methods: {
         getDate() {
             return new Date();
         },
+				subLink() {
+						this.$router.push({
+							name: 'Four',
+						})
+				}
     },
     components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea }
 }
@@ -67,5 +88,15 @@ export default {
 		margin: auto;
 		margin-top: 50px;
 		justify-content: space-between;
+	}
+	.linkbtn{
+		display: flex;
+		flex-direction: row;
+		width: 300px;
+		justify-content: space-between;
+	}
+	.lnk{
+		cursor: pointer;
+		color: blue;
 	}
 </style>
