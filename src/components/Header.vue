@@ -16,8 +16,8 @@
 
         
          <div class="header_wrap-group-lnk">
-            <a  class="lnk"> Задачи</a>
-            <a class="lnk">Пользователи</a>
+            <router-link :to="Tasks"  class="lnk"> Задачи </router-link>
+			<router-link :to="Users"  class="lnk"> Пользователи </router-link>
           </div>
  
           <div class="header_wrap-profile">
@@ -42,6 +42,12 @@ export default {
 	data() {
 		return {
 			counter: 5,
+            Tasks: {
+			    name: 'Tasks',
+			},
+			Users: {
+				name: 'Users',
+			},
 		}
 	},
 
@@ -66,21 +72,14 @@ export default {
 
 <style lang="scss" scoped>
 
-    $text-color: #333333;
-    $disabled-text: #F4F4F4;
-    $label-text: #C4C4C4;
-    $inner-shadow: #B5B5B5;
-    $primary: #7B61FF;
-    $succes: #5EE48C;
-    $error: #FF6161;
 
 .header{
     background-color: white;
     width: 100%;
-    height: 7%;
+    height: 7vh;
     box-sizing: border-box;
     padding: 0 20px;
-    box-shadow: 0px 5px 4px rgba(0, 0, 0, 1);
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.5);
 
 
     &_wrap{
@@ -94,16 +93,16 @@ export default {
         & .lnk{
             font-size: 24px;
             line-height: 33px;
-            color: var($text-color);
+            color: $text-color;
             text-decoration: none;
             margin-right: 10px;
             cursor: pointer;
         }
         & .lnk:hover{
-            color: var($primary);
+            color: $primary;
         }
         & .lnk-active{
-            border-bottom: solid 2px  var($primary);
+            border-bottom: solid 2px  $primary;
         }
         }
         &-profile{
@@ -123,7 +122,7 @@ export default {
             cursor: pointer;
         }
         & .profile_foto{
-            border: solid 1px #7B61FF;
+            border: solid 1px $primary;
             border-radius: 50%;
             width: 44px;
             height: 44px;
@@ -158,7 +157,7 @@ export default {
             }
             &-item:active {
             color: white;
-            background-color: #7B61FF}
+            background-color: $primary}
         }
         & .visable{
             display: block;

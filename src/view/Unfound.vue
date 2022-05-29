@@ -1,0 +1,65 @@
+<template>
+	<div class="notfound">
+      <p>УПС....  Ничего не найдено!</p>
+
+       <router-link to="/"  class="lnk"> <button class="notFoundButton">Домой</button>  </router-link>  
+  </div>
+</template>
+
+<script>
+
+
+export default {
+    data() {
+        return {
+            
+        };
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+	
+.notfound{
+  width: 100%;
+  height: 100vh;
+
+  background-color: #235c80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.notfound p{
+  font-size: 40px;
+  color: white;
+}
+.notfound .notFoundButton{
+    width: 310px;
+    height: 60px;
+    margin-top: 30px;
+    background: rgb(199, 73, 73);
+    border-radius: 9px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 60px;
+    text-align: center;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #FFFFFF;
+
+}
+.notfound .notFoundButton:hover{
+  background:rgb(165, 50, 50);
+}
+.notfound .notFoundButton:active{
+  background:rgb(146, 42, 42);
+  box-shadow: inset 0px 6px 6px rgba(0, 0, 0, 0.25);
+}
+
+</style>

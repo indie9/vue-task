@@ -1,14 +1,8 @@
 <template>
-	<div class="testWrap">
-			<div class="linkbtn">
-				<router-link :to="FirstPage" class="lnk"> FirstPage </router-link>
-				<router-link :to="FirstPageID" class="lnk"> FirstPageID </router-link>
-				<router-link :to="SecondPage" class="lnk"> SecondPage </router-link>
-				<router-link :to="ThirdPage" class="lnk"> ThirdPage </router-link>
+			<div id="root">
+					<Header />
+					<router-view></router-view>	
 			</div>
-			<button class="btn primary" inner="sub link" @click="subLink" > but sub</button>
-			<router-view></router-view>
-	</div>
 </template>
 
 <script>
@@ -19,6 +13,8 @@ import Input from './components/Input.vue';
 import Select from './components/Select.vue';
 import Dropdown from './components/Dropdown.vue';
 import Textarea from './components/Textarea.vue';
+import Header1 from './components/Header.vue';
+import Title from './components/Title.vue';
 
 export default {
     data() {
@@ -29,11 +25,11 @@ export default {
 					inputText: "",
 					selectData: "",
 					dropData: [],
-					FirstPage: {
-						name: 'FirstPage',
-						params: {
-							id: '123123123'
-						},
+					Tasks: {
+						name: 'Tasks',
+					},
+					Users: {
+						name: 'Users',
 					},
 					FirstPageID: {
 						name: 'FirstPage',
@@ -61,9 +57,7 @@ export default {
 		
 	},
     mounted() {
-			this.$router.push({
-					name: 'Four',
-				})
+			
     },
     methods: {
         getDate() {
@@ -75,28 +69,11 @@ export default {
 						})
 				}
     },
-    components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea }
+    components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea, Header1, Title }
 }
 </script>
 
 <style lang="scss" scoped>
-	.testWrap{
-		display: flex;
-		flex-direction: column;
-		height: 800px;
-		width: 450px;
-		margin: auto;
-		margin-top: 50px;
-		justify-content: space-between;
-	}
-	.linkbtn{
-		display: flex;
-		flex-direction: row;
-		width: 300px;
-		justify-content: space-between;
-	}
-	.lnk{
-		cursor: pointer;
-		color: blue;
-	}
+
+
 </style>

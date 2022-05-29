@@ -1,8 +1,11 @@
 import VueRouter from 'vue-router';
-import FirstPage from '../view/FirstPage'
-import SecondPage from '../view/SecondPage'
-import ThirdPage from '../view/ThirdPage'
-import Four from '../view/Four'
+
+import Tasks from '../view/Tasks'
+import Users from '../view/Users'
+import TaskPage from '../view/TaskPage'
+import Profile from '../view/Profile'
+import TaskEdit from '../view/TaskEdit'
+import Unfound from '../view/Unfound'
 
 Vue.use(VueRouter)
 
@@ -18,38 +21,52 @@ const router = () => {
 		mode: 'hash',
 		routes: [
 			{ 
-				path: '/FirstPage/:id?', 
-				name: 'FirstPage',
-				component: FirstPage, 
-				props: true,
-				children: [
-					{
-						path: '/Four',
-						name: 'Four',
-						component: Four,
-						props: true,
-					},
-				]
-			},
-			{ 
-				path: '/SecondPage', 
-				name: 'SecondPage',
-				component: SecondPage, 
+				path: '/Tasks', 
+				name: 'Tasks',
+				component: Tasks, 
 				props: true,
 				children: []
 			},
 			{ 
-				path: '/ThirdPage', 
-				name: 'ThirdPage',
-				component: ThirdPage, 
+				path: '/Users', 
+				name: 'Users',
+				component: Users, 
+				props: true,
+				children: []
+			},
+			{ 
+				path: '/TaskPage/:id', 
+				name: 'TaskPage',
+				component: TaskPage, 
+				props: true,
+				children: []
+			},
+			{ 
+				path: '/Profile/:id', 
+				name: 'Profile',
+				component: Profile, 
+				props: true,
+				children: []
+			},
+			{ 
+				path: '/TaskEdit/:id', 
+				name: 'TaskEdit',
+				component: TaskEdit, 
+				props: true,
+				children: []
+			},
+			{ 
+				path: '/Unfound', 
+				name: 'Unfound',
+				component: Unfound, 
 				props: true,
 				children: []
 			},
 			{
-			 	path: '/', redirect: { name: 'ThirdPage' }
+			 	path: '/', redirect: { name: 'Tasks' }
 			},
 			{
-			 	path: '*', redirect: { name: 'SecondPage' }
+				path: '*', redirect: { name: 'Unfound' }
 			}
 		],
 		
@@ -58,7 +75,7 @@ const router = () => {
 	 r.beforeEach((to, from, next) => {
 	 	console.log(from)
 	 	console.log(to)
-		next()
+		 next()
 	 })
 
 	return r
