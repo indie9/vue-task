@@ -2,9 +2,11 @@
     <section class="main__wrapper">	
     <Title name="Задачи" />	
     <section class='board'>	
+
             <div> 
                 <Task v-for="item in tasksList" :key="item.id" :taskData="item" />
-                
+                <Dropdown :list="otherList" inner="listname"/>
+                <Checkbox item="tort" @change="chek">totek</Checkbox>
             </div>
         </section>
     </section>
@@ -12,6 +14,9 @@
 
 <script>
 import Task from '../components/Task.vue';
+import Button from '../components/Button.vue';
+import Dropdown from '../components/Dropdown.vue';
+import Checkbox from '../components/Checkbox.vue';
 
 export default {
     data() {
@@ -29,10 +34,21 @@ export default {
                     id:"333333",
                     text: "3task3"
                 },
-            ]
+            ],
+            otherList: ["five","six","seven","eight"],
         };
     },
-    components: { Task }
+    components: { Task, Button, Dropdown, Checkbox },
+    methods:{
+        chek(e){
+            e.target.checked
+            ?
+            console.log(e.target.value)
+            :
+            console.log("ryr")
+        }
+    }
+    
 }
 </script>
 

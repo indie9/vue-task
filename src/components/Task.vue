@@ -100,13 +100,13 @@ export default {
 
       & a{
         font-size: 16px;
-        color: var(--text-color);
+        color: $text-color;
         text-decoration: none;
       }
     }
     .task_name:hover >  a{
-      color: var(--primary);
-      border-bottom: solid 2px var(--primary);
+      color: $primary;
+      border-bottom: solid 2px $primary;
     }
     .task_autor{
       width: 15%;
@@ -148,7 +148,7 @@ export default {
       }
 
       & .dropdown-btn{
-        color: var(--primary);
+        color: $primary;
         font-weight: 600;
         width: 20px;
         height: 20px;
@@ -157,7 +157,7 @@ export default {
       }
       & .dropdown-btn:hover,
       & .dropdown-active{
-        background-color: var(--primary);
+        background-color: $primary;
         color: white;
       }
 
@@ -175,7 +175,7 @@ export default {
         font-size: 12px;
         line-height: 14px;
         &-item {
-          color: var(--text-color);
+          color: $text-color;
           font-size: 12px;
           padding: 0 5px;
           background-color: white;

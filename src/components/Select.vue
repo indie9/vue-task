@@ -115,7 +115,7 @@ export default {
 	align-items: center;
 	height: 24px;
 	margin: 2px 0 2px 0;
-	border: 1x solid purple;
+	border: 1x solid $primary;
 	}
 	.custom-checkbox{
 	position: absolute;
@@ -153,17 +153,17 @@ export default {
 
 	.active-checkbox{
 
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
 	border-radius: 3px;
 	}
 	.selectMultiselect:hover {
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
 	border-radius: 3px;
 	}
 	.selectMultiselect:hover > .selectMultiselect-selectBox select{
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	border-radius: 3px;
 	color: var(--text-color);
 	font-weight: 400;

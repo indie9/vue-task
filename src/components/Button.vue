@@ -1,5 +1,7 @@
 <template>
-	<button > {{inner}} </button>
+	<button v-on="listeners"> 
+    <slot> </slot> 
+  </button>
 </template>
 
 <script>
@@ -10,9 +12,11 @@ export default {
 			
 		}
 	},
-    props:{
-        "inner": String,
-    }
+  computed: {
+    listeners() {
+			return this.$listeners;
+		},
+  }
 }
 </script>
 

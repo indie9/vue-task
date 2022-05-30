@@ -1,6 +1,7 @@
 <template>
 			<div id="root">
 					<Header />
+					
 					<router-view></router-view>	
 			</div>
 </template>
@@ -15,6 +16,8 @@ import Dropdown from './components/Dropdown.vue';
 import Textarea from './components/Textarea.vue';
 import Header1 from './components/Header.vue';
 import Title from './components/Title.vue';
+import Button1 from './components/Button.vue';
+import Button2 from './components/Button.vue';
 
 export default {
     data() {
@@ -69,7 +72,7 @@ export default {
 						})
 				}
     },
-    components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea, Header1, Title }
+    components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea, Header1, Title, Button1, Button2 }
 }
 </script>
 

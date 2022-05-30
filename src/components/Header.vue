@@ -157,7 +157,8 @@ export default {
             }
             &-item:active {
             color: white;
-            background-color: $primary}
+            background-color: $primary
+            }
         }
         & .visable{
             display: block;

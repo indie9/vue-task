@@ -40,7 +40,7 @@ export default {
       font-weight: 300;
       font-size: 24px;
       line-height: 28px;
-      color: var(--text-color);
+      color: $text-color;
       overflow: hidden;
       white-space: nowrap;
       max-width: 600px;

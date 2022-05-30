@@ -38,10 +38,10 @@ export default {
     box-shadow: inset 0px 0px 2px 1px #B5B5B5;
     border-radius: 3px;
     height: 24px;
-    color: var(--teaxt-color);
+    color: $text-color;
   }
   input::placeholder {
-    color: var(--label-text);
+    color: $label-text;
   }
   input:hover{
     border: 1px solid #7B61FF;

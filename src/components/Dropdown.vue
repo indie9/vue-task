@@ -2,65 +2,58 @@
 	<div class="multiselect">
         <div class="multiselect-selectBox" @click="showCheckboxes">
           <select>
-            <option disabled selected>{{inner}}</option>
+            <option disabled selected>{{checkedInput}}</option>
           </select>
           <div class="multiselect-overSelect"></div>
         </div>
         <div class="checkboxes" style="display: none" >
-            <div class="checkbox" v-for="item in list" :key="item">
-                <input
-					class="custom-checkbox"
-					type="checkbox"
-					:name="item"
-					:id="item"
-					:value="item" 
-					v-model="checkedInput"
-                />
-
-                <label :for="item" >
-                  {{item}}
-                </label>
-            </div>    
+            <Checkbox v-for="item in list" :key="item" @change="check" v-model="checkedInput" :item="item"> {{item}} </Checkbox>
         </div>
       </div>
 </template>
 
 <script>
+import Checkbox from './Checkbox.vue';
 
 export default {
-	data() {
-		return {
-			count: 0,
-			checkedInput: []	
-		}
-	},
-	props: {
-		"list": Array,
-		"inner": String,
-	},
-	model: {
-		prop: 'checkedData',
-		event: 'changeDrop'
-	},
-	watch: {
-		checkedInput(val) {
-			this.$emit('changeDrop', val);
-		}
-	},
-	methods: {
-		showCheckboxes() {
-			let checkbox = document.getElementsByClassName(`checkboxes`)[0];
-			let multisel = document.getElementsByClassName(`multiselect`)[0];
-			if (checkbox.style.display === "none"){
-				multisel.classList.toggle('active-checkbox');
-				checkbox.style.display = "flex"
-			} else {
-				multisel.classList.toggle('active-checkbox');
-				checkbox.style.display = "none";
-			}
+    data() {
+        return {
+            count: 0,
+            checkedInput: []
+        };
+    },
+    props: {
+        "list": Array,
+        "inner": String,
+    },
+    model: {
+        prop: "checkedData",
+        event: "changeDrop"
+    },
+    watch: {
+        checkedInput(val) {
+            this.$emit("changeDrop", val);
+        }
+    },
+    methods: {
+		check(){
+			console.log(this.checkedInput);
+			this.$emit("changeDrop", val);
 		},
-		
-	}
+        showCheckboxes() {
+            let checkbox = document.getElementsByClassName(`checkboxes`)[0];
+            let multisel = document.getElementsByClassName(`multiselect`)[0];
+            if (checkbox.style.display === "none") {
+                multisel.classList.toggle("active-checkbox");
+                checkbox.style.display = "flex";
+            }
+            else {
+                multisel.classList.toggle("active-checkbox");
+                checkbox.style.display = "none";
+            }
+        },
+    },
+    components: { Checkbox }
 }
 </script>
 
@@ -112,7 +105,7 @@ export default {
 		line-height: 24px;
 		font-weight: 700;
 		background: #FFFFFF;
-		border: 1px solid #333333;
+		border: 1px solid $text-color;
 		border-radius: 5px;
 		padding-left: 5px;
 		color: #FFFFFF;
@@ -128,7 +121,7 @@ export default {
 	align-items: center;
 	height: 24px;
 	margin: 2px 0 2px 0;
-	border: 1x solid purple;
+	border: 1x solid $primary;
 	}
 	.custom-checkbox{
 	position: absolute;
@@ -144,7 +137,7 @@ export default {
 	align-items: center;
 	user-select: none;
 	width: 100%;
-	color: var(--text-color);
+	color: $text-color;
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
@@ -170,19 +163,19 @@ export default {
 
 	.active-checkbox{
 
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
 	border-radius: 3px;
 	}
 	.multiselect:hover {
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
 	border-radius: 3px;
 	}
 	.multiselect:hover > .multiselect-selectBox select{
-	border: 1px solid var(--primary);
+	border: 1px solid $primary;
 	border-radius: 3px;
-	color: var(--text-color);
+	color: $text-color;
 	font-weight: 400;
 	}
 

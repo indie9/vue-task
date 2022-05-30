@@ -42,7 +42,7 @@ export default {
 		& .pagination-info{
 			margin-left: auto;
 			font-size: 14px;
-			color: var(--label-text);
+			color: $label-text;
 		}
 	}
 </style>
