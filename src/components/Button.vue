@@ -1,5 +1,5 @@
 <template>
-	<button v-on="listeners"> 
+	<button v-on="$listeners"> 
     <slot> </slot> 
   </button>
 </template>
@@ -12,11 +12,7 @@ export default {
 			
 		}
 	},
-  computed: {
-    listeners() {
-			return this.$listeners;
-		},
-  }
+  
 }
 </script>
 

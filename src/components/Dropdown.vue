@@ -1,12 +1,12 @@
 <template>
-	<div class="multiselect">
-        <div class="multiselect-selectBox" @click="showCheckboxes">
-          <select>
-            <option disabled selected>{{checkedInput}}</option>
-          </select>
+	<div class="multiselect" :class="{'active-checkbox': isActive}">
+        <div class="multiselect-selectBox" @click="show">
+          <select :class="{'multiselec-active': isActive}">
+            <option disabled selected> Выбрано: {{checkedInput.length}}</option>
+          </select> 
           <div class="multiselect-overSelect"></div>
         </div>
-        <div class="checkboxes" style="display: none" >
+        <div class="checkboxes" v-show="isActive" >
             <Checkbox v-for="item in list" :key="item" @change="check" v-model="checkedInput" :item="item"> {{item}} </Checkbox>
         </div>
       </div>
@@ -19,39 +19,36 @@ export default {
     data() {
         return {
             count: 0,
-            checkedInput: []
+            checkedInput: [],
+			isActive: false,
         };
     },
+	computed: {
+	},
     props: {
         "list": Array,
         "inner": String,
+		id: String,
     },
-    model: {
-        prop: "checkedData",
-        event: "changeDrop"
-    },
+    
     watch: {
         checkedInput(val) {
-            this.$emit("changeDrop", val);
+            this.$emit("input", val);
         }
     },
     methods: {
-		check(){
-			console.log(this.checkedInput);
-			this.$emit("changeDrop", val);
+		
+		check(ev){
+			ev.target.checked 
+			?
+			this.checkedInput.push(ev.target.value)
+			:
+			this.checkedInput = this.checkedInput.filter(item => item != ev.target.value)
 		},
-        showCheckboxes() {
-            let checkbox = document.getElementsByClassName(`checkboxes`)[0];
-            let multisel = document.getElementsByClassName(`multiselect`)[0];
-            if (checkbox.style.display === "none") {
-                multisel.classList.toggle("active-checkbox");
-                checkbox.style.display = "flex";
-            }
-            else {
-                multisel.classList.toggle("active-checkbox");
-                checkbox.style.display = "none";
-            }
-        },
+		show() {
+			console.log(this.isActive)
+			this.isActive=!this.isActive;
+		},
     },
     components: { Checkbox }
 }
@@ -89,7 +86,7 @@ export default {
 	}
 	}
 	.checkboxes {
-	display: none;
+	display: flex;
 	flex-direction: column;
 	background-color: white;
 	width: 98%;
@@ -177,6 +174,12 @@ export default {
 	border-radius: 3px;
 	color: $text-color;
 	font-weight: 400;
+	}
+	.multiselec-active{
+		border: 1px solid $primary;
+		border-radius: 3px;
+		color: $text-color;
+		font-weight: 400;
 	}
 
 </style>

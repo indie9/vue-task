@@ -2,53 +2,70 @@
     <section class="main__wrapper">	
     <Title name="Задачи" />	
     <section class='board'>	
-
-            <div> 
+            <div v-if="load">
+                loading
+            </div>
+            <div v-else> 
+                 
                 <Task v-for="item in tasksList" :key="item.id" :taskData="item" />
-                <Dropdown :list="otherList" inner="listname"/>
-                <Checkbox item="tort" @change="chek">totek</Checkbox>
+                Выбрао {{dropData}} 
+                <Dropdown :list="otherList" inner="listname"  v-model="dropData"/>
+                <Select :list="someList" groupName="names" > </Select>
+                <Button @click="chngLoading" class="btn primary"> change </Button>
+                {{loading}}
+                {{events}}
+                
             </div>
         </section>
     </section>
 </template>
 
 <script>
-import Task from '../components/Task.vue';
+import { mapGetters,mapActions } from 'vuex';
 import Button from '../components/Button.vue';
-import Dropdown from '../components/Dropdown.vue';
-import Checkbox from '../components/Checkbox.vue';
-
 export default {
     data() {
         return {
             tasksList: [
                 {
-                    id:"111111",
+                    id: "111111",
                     text: "1task1"
                 },
                 {
-                    id:"222222",
+                    id: "222222",
                     text: "2task2"
                 },
                 {
-                    id:"333333",
+                    id: "333333",
                     text: "3task3"
                 },
             ],
-            otherList: ["five","six","seven","eight"],
+            otherList: ["five", "six", "seven", "eight"],
+            someList: ["one", "two", "three", "four"],
+            dropData: [],
+            load: true,
         };
     },
-    components: { Task, Button, Dropdown, Checkbox },
-    methods:{
-        chek(e){
-            e.target.checked
-            ?
-            console.log(e.target.value)
-            :
-            console.log("ryr")
+    computed: {
+        ...mapGetters(["loading","events"]), 
+    },
+    watch:{
+        events() {
+            this.load = false
+           
         }
-    }
-    
+    },
+    mounted() {
+        this.fetchEvents();
+        
+    },
+    methods:{
+        ...mapActions(["setLoading","fetchEvents"]),
+        chngLoading() {
+           this.setLoading(!this.loading)
+        }
+    },
+   
 }
 </script>
 

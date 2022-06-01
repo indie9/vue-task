@@ -1,23 +1,24 @@
 <template>
-	<div class="selectMultiselect">
-        <div class="selectMultiselect-selectBox" @click="showselectCheckboxes">
+	<div class="selectMultiselect" :class="{'active-checkbox': isActive}">
+        <div class="selectMultiselect-selectBox" @click="show">
           <select>
-            <option disabled selected>{{selectIner}}</option>
+            <option disabled selected>{{checkedOption}}</option>
           </select>
           <div class="selectMultiselect-overSelect"></div>
         </div>
-        <div class="selectCheckboxes" style="display: none" >
+        <div class="selectCheckboxes" v-show="isActive" >
             <div class="checkbox" v-for="item in list" :key="item">
                 <input
                   class="custom-checkbox"
                   type="radio"
-                  :name="inner"
+                  :name="groupName"
                   :id="item"
 				  :value="item" 
 				  v-model="selectedInput"
+				  @change="check"
                 />
-                <label :for="item" :name="item">
-                  {{item}}
+                <label :for="item" :name="groupName" >
+                 {{item}}
                 </label>
             </div>    
         </div>
@@ -29,20 +30,21 @@
 export default {
 	data() {
 		return {
-			selectIner:"",
-			selectedInput: ""
+			checkedOption:"",
+			selectedInput: "",
+			isActive: false,
 		}
 	},
 	props: {
 		"list": Array,
-		"inner": String,
+		"groupName": String,
 	},
 	model: {
 		prop: 'selectData',
 		event: 'changeSelect'
 	},
  	mounted() {
-    	this.selectIner = this.inner; 
+    	this.checkedOption = this.groupName; 
   	},
 	watch:{
 		selectedInput(val){
@@ -50,21 +52,12 @@ export default {
 		}
 	},
   	methods: {
-    	showselectCheckboxes() {
-			let checkbox = document.getElementsByClassName(`selectCheckboxes`)[0];
-			let multisel = document.getElementsByClassName(`selectMultiselect`)[0];
-
-			if (checkbox.style.display === "none"){
-				multisel.classList.toggle('active-checkbox');
-				checkbox.style.display = "flex"
-			} else {
-				multisel.classList.toggle('active-checkbox');
-				checkbox.style.display = "none";
-			}
+    	show() {
+			this.isActive=!this.isActive;
 		},
-    changeInner(e) {
-      this.selectIner = e.target.innerHTML
-    },
+    	check(e) {
+     		this.checkedOption = e.target.value
+    	},
   }
 }
 </script>
@@ -102,7 +95,7 @@ export default {
 	}
 	}
 	.selectCheckboxes {
-	display: none;
+	display: flex;
 	flex-direction: column;
 	background-color: white;
 	width: 100%;

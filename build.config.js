@@ -9,7 +9,16 @@ module.exports = {
 		
 		assetsSubDirectory: 'static',
 		assetsPublicPath: '/',
-		proxyTable: {},
+		proxyTable: {
+			['/api']: {
+				target: 'http://93.95.97.34',
+				pathRewrite: {
+					['^/api']: ['/api']
+				},
+				changeOrigin: true,
+				secure: false
+			},
+		},
 		
 		host: 'localhost', // can be overwritten by process.env.HOST
 		port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

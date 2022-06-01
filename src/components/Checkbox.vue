@@ -5,7 +5,7 @@
 			type="checkbox"
 			:id="item"
 			:value="item"
-			v-on="listeners"
+			v-on="$listeners"
             />
         <label :for="item">
             <slot></slot>
@@ -25,14 +25,9 @@ export default {
 		item: String,
 	},
 	model: {
-		prop: 'checkedData',
+		
 		event: 'changeDrop'
 	},
-	computed: {
-    	listeners() {
-			return this.$listeners;
-		},
-  	}
 }
 </script>
 
