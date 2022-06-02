@@ -1,61 +1,60 @@
 <template>
   <section class="main__wrapper">	
-    <Title name="Имя задачи" />	
+    <Title :name="currentTask.title" />	
     <section class='board'>	
-   
-        <section class="taskPage">
+        <div v-if="loading || commentsLoading">loading</div>
+        <section class="taskPage" v-else>
             <div class="taskPage-data">
 
                 <p class='taskPage-title'>Исполнитель</p>
-                <p>assignedId</p>
+                <p>{{userlist[currentTask.assignedId]}}</p>
 
                 <p class='taskPage-title'>Автор задачи</p>
-                <p>userId</p>
+                <p>{{userlist[currentTask.userId]}}</p>
 
                 <p class='taskPage-title'>Тип запроса</p>
-                <p>type</p>
+                <p>{{Enum[currentTask.type] }}</p>
 
                 <p class='taskPage-title'>Приоритет</p>
-                <p>rank</p>
+                <p>{{Enum[currentTask.rank] }}</p>
 
                 <p class='taskPage-title'>Дата начала</p>
-                <p>dateOfCreation</p>
+                <p>{{moment(currentTask.dateOfCreation)}}</p>
 
                 <p class='taskPage-title'>Дата изменения</p>
-                <p>dateOfUpdate</p>
+                <p>{{moment(currentTask.dateOfUpdate)}}</p>
 
                 <p class='taskPage-title'>Затрачено времени</p>
 
                 <p>
-                " День "," Час "," Минута "
+                {{getNoun(Math.floor(currentTask.timeInMinutes%60)," Минута "," Минуты "," Минут ")}}
                   
 
                 </p>
 
-                <button class='btn primary' >Сделать запись о работе</button>
+                <Button class='btn primary' >Сделать запись о работе</Button>
 
             </div>
 
             <div class="taskPage-info">
                 <p class='taskPage-title'>Описание</p>
-                <p  class="taskPage-info-text">Task id :  {{id}}</p>
+                <p  class="taskPage-info-text">{{currentTask.description}}</p>
             </div>
 
             <form class="taskPage-comments" >
                 <p class='taskPage-title'>Коментарии </p>
-                <textarea
+                <Textarea
                 class='taskPage-textArea'
-                
                 placeholder="Текст комментария"
                 required
                 />
-                <button type="submit" class='btn success'> Добавить комментарий</button>
+                <Button class='btn success'> Добавить комментарий</Button>
                 
                 <div class="comments-list">
-                  
-                    <div class="comment-item" key={item.id} >
-                      <p class='comment-title'> <button type="button" class='btn error'>Удалить</button></p>
-                      <p class='comment-body'>{item.text}</p>
+                   
+                    <div class="comment-item" v-for="coment in comments" :key="coment.id" >
+                      <p class='comment-title'>{{userlist[coment.userId]}} <Button class='btn error' v-show="true">Удалить</Button></p>
+                      <p class='comment-body'>{{coment.text}}</p>
                     </div>
                 
 
@@ -70,15 +69,58 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from 'vuex';
+import { Enum } from '../constants/enum';
+import moment from "moment";
+import "moment/locale/ru";
 
 export default {
     data() {
-        return {  
+        return { 
+          Enum: Enum, 
       	};
     },
     props: {
         id: String
-    }
+    },
+    computed: {
+        ...mapGetters('tasks',["loading", "tasks", "filter","currentTask"]),
+        ...mapGetters('users',["users", "userlist"]),
+        ...mapGetters('comments',["comments", "commentsLoading"]),
+    },
+    methods: {
+        ...mapActions('tasks',["setLoading", "fetchTasks","getTask"]),
+        ...mapActions('users',["fetchUsers"]),
+        ...mapActions('comments',["fetchComments"]),
+        moment(date) {
+          return moment(date).format('DD.MM.YYYY h:mm');
+        },
+        getNoun(number, one, two, five) {
+          let n = Math.abs(number);
+          n %= 100;
+          if (n >= 5 && n <= 20) {
+            return number + five;
+          }
+          n %= 10;
+          if (n === 1) {
+            return number + one;
+          }
+          if (n >= 2 && n <= 4) {
+            return number + two;
+          }
+          return number + five;
+        },
+    },
+    watch:{
+      comments() {
+        console.log(this.comments)
+      }
+    },
+    mounted() {
+        this.getTask(this.id);
+        this.fetchComments(this.id)
+        this.fetchUsers()
+    },
 }
 </script>
 
@@ -115,7 +157,7 @@ export default {
     padding: 0 20px;
   }
   &-title{
-    color: var(--label-text);
+    color: $label-text;
     margin: 0 0 5px 0;
   }
   &-textArea{
@@ -127,7 +169,7 @@ export default {
     padding: 5px;
   }
   &-textArea::placeholder{
-    color: var(--label-text);
+    color: $label-text;
   }
   &-textArea:hover{
     border: 1px solid #7B61FF;

@@ -1,82 +1,58 @@
 <template>
 			<div id="root">
 					<Header />
-					
-					<router-view></router-view>	
+					<section class="main__wrapper" v-if="!loginFlag">	
+						
+						
+					</section>
+					<router-view v-else></router-view>	
 			</div>
 </template>
 
 <script>
-import Pagination from './components/Pagination.vue';
-import Header from './components/Header.vue';
-import Button from './components/Button.vue';
-import Input from './components/Input.vue';
-import Select from './components/Select.vue';
-import Dropdown from './components/Dropdown.vue';
-import Textarea from './components/Textarea.vue';
-import Header1 from './components/Header.vue';
-import Title from './components/Title.vue';
-import Button1 from './components/Button.vue';
-import Button2 from './components/Button.vue';
-
+import { mapGetters,mapActions } from 'vuex';
 export default {
     data() {
         return {
-          counter: 5,
-					someList: ["one","two","three","four"],
-					otherList: ["five","six","seven","eight"],
-					inputText: "",
-					selectData: "",
-					dropData: [],
-					Tasks: {
-						name: 'Tasks',
-					},
-					Users: {
-						name: 'Users',
-					},
-					FirstPageID: {
-						name: 'FirstPage',
-						params: {
-							id: '456456'
-						},
-					},
-					SecondPage: {
-						path: '/SecondPage',
-					},
-					ThirdPage: {
-						path: '/ThirdPage',
-					},
-					Four: {
-						name: 'Four',
-					},
+          
         };
     },
     computed: {
-        text() {
-            return "count: " + this.counter;
-        }
+       	loginFlag(){
+		   return localStorage.getItem('userId');
+		},
+		...mapGetters("userprofile", ["userProfileData"]),
     },
 	watch:{
 		
 	},
     mounted() {
-			
+		
+		if (!this.loginFlag) {
+			this.login({
+						"login": "indie777",
+						"password": "123"
+						})
+						
+
+		}
+		
     },
     methods: {
-        getDate() {
-            return new Date();
-        },
-				subLink() {
-						this.$router.push({
-							name: 'Four',
-						})
-				}
+       ...mapActions('userprofile',["login"]),
     },
-    components: { Pagination, Header, Button, Input, Select, Dropdown, Textarea, Header1, Title, Button1, Button2 }
+    
 }
 </script>
 
 <style lang="scss" scoped>
-
-
+	.main__wrapper{
+		width: 100%;
+		height: 93vh;
+		background-color: #E3E3E3;
+		padding: 30px 80px 0px 80px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+	}
 </style>

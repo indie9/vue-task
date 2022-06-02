@@ -2,18 +2,12 @@
     <section class="main__wrapper">	
     <Title name="Задачи" />	
     <section class='board'>	
-            <div v-if="load">
+            <div v-if="loading">
                 loading
             </div>
             <div v-else> 
-                 
-                <Task v-for="item in tasksList" :key="item.id" :taskData="item" />
-                Выбрао {{dropData}} 
-                <Dropdown :list="otherList" inner="listname"  v-model="dropData"/>
-                <Select :list="someList" groupName="names" > </Select>
-                <Button @click="chngLoading" class="btn primary"> change </Button>
-                {{loading}}
-                {{events}}
+                
+                <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
                 
             </div>
         </section>
@@ -22,48 +16,30 @@
 
 <script>
 import { mapGetters,mapActions } from 'vuex';
-import Button from '../components/Button.vue';
+
+
 export default {
     data() {
-        return {
-            tasksList: [
-                {
-                    id: "111111",
-                    text: "1task1"
-                },
-                {
-                    id: "222222",
-                    text: "2task2"
-                },
-                {
-                    id: "333333",
-                    text: "3task3"
-                },
-            ],
-            otherList: ["five", "six", "seven", "eight"],
-            someList: ["one", "two", "three", "four"],
-            dropData: [],
-            load: true,
-        };
+        return {};
     },
     computed: {
-        ...mapGetters(["loading","events"]), 
+        ...mapGetters('tasks',["loading", "tasks", "filter"]),
+        ...mapGetters('users',["users", "userlist"]),
     },
-    watch:{
-        events() {
-            this.load = false
-           
-        }
-    },
+    watch: {},
     mounted() {
-        this.fetchEvents();
+        this.fetchTasks({
+                "filter": {},
+                "page": 0,
+                "limit": 8,
+            });
+        this.fetchUsers()
         
+       
     },
-    methods:{
-        ...mapActions(["setLoading","fetchEvents"]),
-        chngLoading() {
-           this.setLoading(!this.loading)
-        }
+    methods: {
+        ...mapActions('tasks',["setLoading", "fetchTasks"]),
+        ...mapActions('users',["fetchUsers"]),
     },
    
 }

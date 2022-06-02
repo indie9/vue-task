@@ -72,11 +72,7 @@ const router = () => {
 		
 	});
 
-	 r.beforeEach((to, from, next) => {
-	 	console.log(from)
-	 	console.log(to)
-		 next()
-	 })
+	 
 
 	return r
 }

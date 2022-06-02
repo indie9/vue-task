@@ -39,16 +39,12 @@ export default {
 		"list": Array,
 		"groupName": String,
 	},
-	model: {
-		prop: 'selectData',
-		event: 'changeSelect'
-	},
  	mounted() {
     	this.checkedOption = this.groupName; 
   	},
 	watch:{
 		selectedInput(val){
-			this.$emit('changeSelect', val);
+			this.$emit('input', val);
 		}
 	},
   	methods: {

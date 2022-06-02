@@ -30,7 +30,6 @@ export default {
         "inner": String,
 		id: String,
     },
-    
     watch: {
         checkedInput(val) {
             this.$emit("input", val);

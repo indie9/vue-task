@@ -2,32 +2,38 @@
 	 <article class="task" >
 
       <div class="task_inner">
-
           <div class="task_inner-item task_type">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill="#00D1FF"/>
+                <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" :fill="typecheck"/>
                 <circle cx="12" cy="12" r="6" fill="white"/>
               </svg>
           </div>
 
           <div class="task_inner-item task_name">            
-              <router-link :to="TaskPage"  class="lnk"> {{taskData.text}} </router-link>      
+              <router-link :to="TaskPage"  class="lnk"> {{taskData.title}} </router-link>      
           </div>
 
    
           <div  class="task_inner-item task_autor">
-           	{{taskData.id}}
+           	{{userlist[taskData.assignedId]}}
           </div>
     
           <div class="task_inner-item task_status" >
-            <div class="task_status-btn status-opened">{status}</div>
+           <!-- <div class="task_status-btn status-opened"></div>-->
+           <Plate :class="taskData.status"> {{Enum[taskData.status]}} </Plate>
           </div>
 
-          <div class="task_inner-item task_priority priority-low">{rank}</div>
+          <div class="task_inner-item task_priority priority-low" >{{taskData.rank}}</div>
 
    
           <div class="task_btn">
-              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link> 
+            <DropMenu >
+              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
+            </DropMenu>
+              
           </div>
           
       </div>
@@ -36,27 +42,44 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from 'vuex';
+import { Enum } from '../constants/enum';
+import DropMenu from './DropMenu.vue';
+
 
 export default {
     data() {
-        return { 
-					TaskPage: {
-						name: 'TaskPage',
-            params: {
-              id: this.taskData.id
-            }
-					},
-					TaskEdit: {
-						name: 'TaskEdit',
-             params: {
-              id: this.taskData.id
-            }
-					}, 
-      	};
+        return {
+            TaskPage: {
+                name: "TaskPage",
+                params: {
+                    id: this.taskData.id
+                }
+            },
+            TaskEdit: {
+                name: "TaskEdit",
+                params: {
+                    id: this.taskData.id
+                }
+            },
+            Enum: Enum,
+        };
     },
     props: {
-      taskData: Object,
-    }
+        taskData: Object,
+    },
+    computed: {
+        ...mapGetters("tasks", ["loading", "tasks", "filter"]),
+        ...mapGetters("users", ["users", "userlist"]),
+        typecheck() {
+            return this.taskData.type === "task" ? "#00D1FF" : "#EB4F4F";
+        }
+    },
+    methods: {
+        ...mapActions("tasks", ["setLoading", "fetchTasks"]),
+        ...mapActions("users", ["fetchUsers"]),
+    },
+    components: { DropMenu }
 }
 </script>
 
@@ -142,59 +165,7 @@ export default {
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      & .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      & .dropdown-btn{
-        color: $primary;
-        font-weight: 600;
-        width: 20px;
-        height: 20px;
-        border-radius: 3px;
-        text-align: center;
-      }
-      & .dropdown-btn:hover,
-      & .dropdown-active{
-        background-color: $primary;
-        color: white;
-      }
-
-      & .dropdown-content {
-        display: none;
-        position: absolute;
-        left: -100px;
-        top:  22px;
-        overflow: hidden;
-        width: 120px;
-        z-index: 1;
-        background-color: white;
-        box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
-        border-radius: 5px;
-        font-size: 12px;
-        line-height: 14px;
-        &-item {
-          color: $text-color;
-          font-size: 12px;
-          padding: 0 5px;
-          background-color: white;
-          text-decoration: none;
-          text-align: left;
-          display: block;
-          font-size: 12px;
-          line-height: 20px;
-          width: 100%;
-        }
-
-        &-item:hover {background-color: #E6E1FF}
-        &-item:active {
-          color: white;
-          background-color: #7B61FF}
-      }
-      & .visable{
-        display: block;
-      }
+     
     }
   }
 }
