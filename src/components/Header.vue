@@ -22,9 +22,9 @@
  
           <div class="header_wrap-profile">
 
-              <span class="username">name</span>
+              <span class="username">{{userProfileData.username}}</span>
               <div class="userfoto ">
-                  <img class="profile_foto" alt="" width="42" height="42" />
+                  <img class="profile_foto" alt="avatar" width="42" height="42" :src="userProfileData.photoUrl"/>
                   <div class="dropdown-content" id="header-drop-content" >
                     <a class='dropdown-content-item' >Посмотреть профиль</a>
                     <button class='dropdown-content-item'> Выйти </button>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-
+import { mapGetters,mapActions } from 'vuex';
 export default {
 	data() {
 		return {
@@ -53,6 +53,7 @@ export default {
 
 	
 	computed: {
+        ...mapGetters("userprofile", ["userProfileData"]),
 		text() {
 			return  'count: ' + this.counter;
 		}

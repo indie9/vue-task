@@ -6,9 +6,9 @@
                 loading
             </div>
             <div v-else> 
-                
+                <Sorting />
                 <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
-                
+                <Pagination v-model="page"/>
             </div>
         </section>
     </section>
@@ -18,30 +18,40 @@
 import { mapGetters,mapActions } from 'vuex';
 
 
+
 export default {
     data() {
-        return {};
+        return {
+            page: 0,
+        };
     },
     computed: {
-        ...mapGetters('tasks',["loading", "tasks", "filter"]),
-        ...mapGetters('users',["users", "userlist"]),
+        ...mapGetters("tasks", ["loading", "tasks", "filter"]),
+        ...mapGetters("users", ["users", "userlist"]),
     },
-    watch: {},
-    mounted() {
-        this.fetchTasks({
-                "filter": {},
-                "page": 0,
+    watch: {
+        page(val) {
+            console.log('page',val)
+			this.setFilter({
+                "filter": this.filter.filter,
+                "page": val,
                 "limit": 8,
-            });
-        this.fetchUsers()
-        
-       
+            })
+		},
+    },
+    mounted() {
+        this.page = this.filter.page
+        this.fetchTasks({
+            "filter": this.filter.filter,
+            "page": this.filter.page,
+            "limit": 8,
+        });
+        this.fetchUsers();
     },
     methods: {
-        ...mapActions('tasks',["setLoading", "fetchTasks"]),
-        ...mapActions('users',["fetchUsers"]),
+        ...mapActions("tasks", ["setLoading", "fetchTasks","setFilter"]),
+        ...mapActions("users", ["fetchUsers"]),
     },
-   
 }
 </script>
 

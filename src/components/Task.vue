@@ -28,10 +28,10 @@
    
           <div class="task_btn">
             <DropMenu >
-              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
             </DropMenu>
               
           </div>

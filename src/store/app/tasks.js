@@ -5,7 +5,8 @@ export const mutation = {
 	SET_LOADING: 'SET_LOADING',
     SET_TASKS: 'SET_TASKS',
 	SET_FILTER: 'SET_FILTER',
-	SET_CURRENT_TASK: 'CURRENT_TASK'
+	SET_CURRENT_TASK: 'CURRENT_TASK',
+
 }
 
 export default {
@@ -14,18 +15,20 @@ export default {
 		loading: true,
         tasks:[],
 		filter:{
-			"filter": {},
-			"page": 0,
-			"limit": 100
+			filter: {},
+			page: 0,
+			limit: 100
 		},
-		currentTask: {}
+		currentTask: {},
+	
 	},
 
 	getters: {
 		loading: state => state.loading,
         tasks: state => state.tasks,
 		filter: state => state.filter,
-		currentTask: state => state.currentTask
+		currentTask: state => state.currentTask,
+	
 	},
 
 	mutations: {
@@ -48,14 +51,13 @@ export default {
 			commit(mutation.SET_LOADING, value)
 		},
         fetchTasks: ({ dispatch, commit }, filter) => {
-			
 			dispatch('setLoading', true)
 			api.Events.getTasks(filter)
                 .then(({data}) => {
-                       
-                        commit(mutation.SET_TASKS, data)
+					console.log(data)
+                        commit(mutation.SET_TASKS, data);
+						
 						dispatch('setLoading', false);
-                   
                 })
 		},
 		getTask:  ({ dispatch, commit }, id) => {
@@ -66,6 +68,10 @@ export default {
 					commit(mutation.SET_CURRENT_TASK, data)
 					dispatch('setLoading', false)
 				})
+		},
+		setFilter:  ({ dispatch, commit }, filter) => {
+			commit(mutation.SET_FILTER, filter)
+			dispatch('fetchTasks', filter);
 		},
 	},
 }

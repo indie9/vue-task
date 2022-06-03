@@ -28,6 +28,12 @@ export default api => {
 				url: `users/all`,
 			})
 		},
+		getUser(id){
+			return api.instance.request({
+				method: 'get',
+				url: `users/${id}`,
+			})
+		},
 		getLogin(form) {
 			return api.instance.request({
 				method: 'post',

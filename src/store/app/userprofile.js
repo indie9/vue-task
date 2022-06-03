@@ -25,10 +25,16 @@ export default {
         login: ({ dispatch, commit }, form) => {
 			api.Events.getLogin(form)
                 .then(({data}) => {
-                        commit(mutation.SET_USER_PROFILE, data)
                         localStorage.setItem('userId', data.id);
                         localStorage.setItem('userPass', data.password);	
                 }).then(() => document.location.href = '/')
+		},
+		getUserData: ({ dispatch, commit }, id) => {
+			
+			api.Events.getUser(id)
+                .then(({data}) => {
+                        commit(mutation.SET_USER_PROFILE, data)	
+                })
 		},
 	},
 }
