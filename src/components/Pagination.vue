@@ -4,7 +4,7 @@
 
 		<Button class='btn default' @click="prevPage"> Назад</Button>
 
-		<Button class='btn primary' > {{page}} </Button>
+		<Button class='btn primary' > {{page+1}} </Button>
 
 		<Button class='btn default' @click="nextPage"> Вперед </Button>
 

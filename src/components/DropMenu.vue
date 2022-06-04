@@ -1,12 +1,17 @@
 <template>
-	<div class="dropdown" >
-        <p class="dropdown-btn" @click="drop" >
-            <span> &#9776;</span>
-        </p>
-        <div class="dropdown-content" v-show="isActive"  >
-            <slot></slot>
-        </div>
+    <div class="dropdown" >
+      <div @click="drop" >
+        <slot name="link"></slot>
+      </div>
+      <div class="dropdown-content" v-show="isActive"  >
+        <slot></slot>
+      </div>
     </div>
+
+
+
+        
+    
 </template>
 
 <script>
@@ -15,6 +20,7 @@ export default {
 	data() {
 		return {
 			isActive: false,
+      
 		}
 	},
     methods: {
@@ -29,8 +35,9 @@ export default {
 <style lang="scss" scoped>
  .dropdown-content {
         position: absolute;
-        left: -100px;
-        top:  22px;
+        
+        right: 5%;
+        top:  110%;
         overflow: hidden;
         width: 120px;
         z-index: 1;
@@ -58,21 +65,10 @@ export default {
           background-color: #7B61FF}
       }
         .dropdown {
-        position: relative;
-        display: inline-block;
+          position: relative;
+          display: inline-block;
+         
       }
 
-       .dropdown-btn{
-        color: $primary;
-        font-weight: 600;
-        width: 20px;
-        height: 20px;
-        border-radius: 3px;
-        text-align: center;
-      }
-       .dropdown-btn:hover,
-       .dropdown-active{
-        background-color: $primary;
-        color: white;
-      }
+       
 </style>

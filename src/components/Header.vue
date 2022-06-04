@@ -22,14 +22,16 @@
  
           <div class="header_wrap-profile">
 
-              <span class="username">{{userProfileData.username}}</span>
-              <div class="userfoto ">
-                  <img class="profile_foto" alt="avatar" width="42" height="42" :src="userProfileData.photoUrl"/>
-                  <div class="dropdown-content" id="header-drop-content" >
-                    <a class='dropdown-content-item' >Посмотреть профиль</a>
-                    <button class='dropdown-content-item'> Выйти </button>
-                  </div>
-              </div>
+            <span class="username">{{userProfileData.username}}</span>
+            <DropMenu >
+                <template v-slot:link>
+                    <img class="profile_foto" alt="avatar" width="42" height="42" :src="userProfileData.photoUrl"/>
+                </template>
+                <a class='dropdown-content-item' >Посмотреть профиль</a>
+                <button class='dropdown-content-item'> Выйти </button>
+                <!-- <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link> -->
+            </DropMenu>
+              
           </div>
           
         </section>

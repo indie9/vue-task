@@ -1,21 +1,33 @@
 <template>
     <section class="main__wrapper">	
-    <Title name="Задачи" />	
-    <section class='board'>	
-            <div v-if="loading">
-                loading
-            </div>
-            <div v-else> 
-                <Sorting />
-                <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
-                <Pagination v-model="page"/>
-            </div>
+        <Title >
+            
+            Задачи 
+            
+            <template v-slot:subTitle>
+              <Plate class="inProgress" > Открыто </Plate>
+            </template>
+            <template v-slot:buttons>
+               <router-link to="/" > <Button class="btn primary"> Добавить</Button> </router-link>
+            </template>
+        </Title>	
+
+        <div v-if="loading">
+            loading
+        </div>
+
+        <section class='board' v-else>	     
+            <Sorting />
+            <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
+            <Pagination v-model="page"/>
         </section>
+
     </section>
 </template>
 
 <script>
 import { mapGetters,mapActions } from 'vuex';
+import Plate from '../components/Plate.vue';
 
 
 
@@ -31,16 +43,16 @@ export default {
     },
     watch: {
         page(val) {
-            console.log('page',val)
-			this.setFilter({
+            console.log("page", val);
+            this.setFilter({
                 "filter": this.filter.filter,
                 "page": val,
                 "limit": 8,
-            })
-		},
+            });
+        },
     },
     mounted() {
-        this.page = this.filter.page
+        this.page = this.filter.page;
         this.fetchTasks({
             "filter": this.filter.filter,
             "page": this.filter.page,
@@ -49,9 +61,10 @@ export default {
         this.fetchUsers();
     },
     methods: {
-        ...mapActions("tasks", ["setLoading", "fetchTasks","setFilter"]),
+        ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
         ...mapActions("users", ["fetchUsers"]),
     },
+    components: { Plate }
 }
 </script>
 

@@ -27,12 +27,19 @@
 
    
           <div class="task_btn">
-            <DropMenu >
-              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-              <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+           <DropMenu >
+             <template v-slot:link>
+               <span class="dropdown-btn"> &#9776;</span>
+            </template>
+              
+              
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+              
             </DropMenu>
+           
               
           </div>
           
@@ -165,7 +172,19 @@ export default {
       justify-content: center;
       align-items: center;
       cursor: pointer;
-     
+      .dropdown-btn{
+        color: $primary;
+        font-weight: 600;
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+        text-align: center;
+      }
+       .dropdown-btn:hover,
+       .dropdown-active{
+        background-color: $primary;
+        color: white;
+      }
     }
   }
 }

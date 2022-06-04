@@ -2,22 +2,27 @@
 <template>
 	<div class="title">
     <div class="sub-title">		
-			<span class="name"> {{name}} </span>	
-		</div>	
+			<span class="name"> <slot ></slot> </span>
+      <slot name="subTitle"> </slot>	
+		</div>
+     <div class="buttons">
+        <slot name="buttons"></slot>
+        
+      </div>	
 	</div>
 </template>
 
 <script>
+import Button from './Button.vue'
 
 export default {
-	data() {
-		return {
-			
-		}
-	},
-    props:{
-        "name": String,
-    }
+    data() {
+        return {};
+    },
+    props: {
+       
+    },
+    components: { Button }
 }
 </script>
 
