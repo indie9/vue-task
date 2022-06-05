@@ -8,7 +8,7 @@
               <Plate class="inProgress" > Открыто </Plate>
             </template>
             <template v-slot:buttons>
-               <router-link to="/" > <Button class="btn primary"> Добавить</Button> </router-link>
+               <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить</Button> </router-link>
             </template>
         </Title>	
 
@@ -35,6 +35,9 @@ export default {
     data() {
         return {
             page: 0,
+            TaskEdit: {
+                name: "TaskEdit",
+            },
         };
     },
     computed: {
@@ -43,7 +46,6 @@ export default {
     },
     watch: {
         page(val) {
-            console.log("page", val);
             this.setFilter({
                 "filter": this.filter.filter,
                 "page": val,

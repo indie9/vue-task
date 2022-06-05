@@ -17,7 +17,7 @@ export default {
 		filter:{
 			filter: {},
 			page: 0,
-			limit: 100
+			limit: 8
 		},
 		currentTask: {},
 	
@@ -50,7 +50,7 @@ export default {
 		setLoading: ({ dispatch, commit }, value) => {
 			commit(mutation.SET_LOADING, value)
 		},
-        fetchTasks: ({ dispatch, commit }, filter) => {
+    fetchTasks: ({ dispatch, commit }, filter) => {
 			dispatch('setLoading', true)
 			api.Events.getTasks(filter)
                 .then(({data}) => {

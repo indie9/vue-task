@@ -2,7 +2,6 @@ export default api => {
 	api.Events = {
 		/*********TASKS RESPONCES********** */
 		getTasks(filter) {
-	
 			return api.instance.request({
 				method: 'post',
 				url: `tasks`,
@@ -15,10 +14,49 @@ export default api => {
 				url: `tasks/${id}`,
 			})
 		},
+		addTask(taskData){
+			return api.instance.request({
+				method: 'put',
+				url:'tasks/createOrEdit',
+				data: taskData
+			})
+		},
+		deleteTask(id){
+			return api.instance.request({
+				method: 'delete',
+				url:`tasks/${id}`,
+			})
+		},
 		getComments(id) {
 			return api.instance.request({
 				method: 'get',
 				url: `comments/${id}`,
+			})
+		},
+		addComment(commentData){
+			return api.instance.request({
+				method: 'put',
+				url:'comments/createOrEdit',
+				params: commentData
+			})
+		},
+		removeComment(id){
+			return api.instance.request({
+				method: 'delete',
+				url:`comments/${id}`,
+			})
+		},
+		addTime(id,timeData){
+			return api.instance.request({
+				method: 'patch',
+				url:`tasks/${id}/worktime`,
+				params: timeData
+			})
+		},
+		changeStatus(id,status) {
+			return api.instance.request({
+				method: 'patch',
+				url:`tasks/${id}/status/${status}`,
 			})
 		},
 		/*********USERS RESPONCES********** */
@@ -28,10 +66,24 @@ export default api => {
 				url: `users/all`,
 			})
 		},
+		getUsers(filter) {
+			return api.instance.request({
+				method: 'post',
+				url: `users`,
+				data: filter
+			})
+		},
 		getUser(id){
 			return api.instance.request({
 				method: 'get',
 				url: `users/${id}`,
+			})
+		},
+		editUser(form) {
+			return api.instance.request({
+				method: 'put',
+				url:'users/edit',
+				params: form
 			})
 		},
 		getLogin(form) {

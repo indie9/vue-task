@@ -7,11 +7,11 @@
 export default {
 	data() {
 		return {
-      
+       content: this.value,
 		}
 	},
   props:{
-        "placeholder": String,
+    "placeholder": String,
 		"width": {
 			type: String,
 			default: "100%"
@@ -19,8 +19,14 @@ export default {
 		"height":{
 			type: String,
 			default: "100%"
-			},
+		},
+    "value": String,
+  },
+  watch:{
+    content(){
+      this.$emit('input', this.content)
     }
+  },
 }
 </script>
 

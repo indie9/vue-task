@@ -1,24 +1,25 @@
 <template>
 	<div class="selectMultiselect" :class="{'active-checkbox': isActive}">
-        <div class="selectMultiselect-selectBox" @click="show">
+        <div class="selectMultiselect-selectBox" @click="show" v-click-outside="hide">
           <select>
-            <option disabled selected>{{checkedOption}}</option>
+            <option disabled selected>{{selectedInput ? list[selectedInput] : placeholder }}</option>
           </select>
           <div class="selectMultiselect-overSelect"></div>
         </div>
         <div class="selectCheckboxes" v-show="isActive" >
-            <div class="checkbox" v-for="item in list" :key="item">
+            <div class="checkbox" v-for="item in Object.keys(list)" :key="item">
                 <input
                   class="custom-checkbox"
                   type="radio"
-                  :name="groupName"
+                  :name="placeholder"
                   :id="item"
-				  :value="item" 
-				  v-model="selectedInput"
-				  @change="check"
+									:value="item" 
+									v-model="selectedInput"
+									
+									@change="check"
                 />
-                <label :for="item" :name="groupName" >
-                 {{item}}
+                <label :for="item" :name="placeholder" >
+                 {{list[item]}}
                 </label>
             </div>    
         </div>
@@ -26,21 +27,23 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
 
 export default {
 	data() {
 		return {
-			checkedOption:"",
+
 			selectedInput: "",
 			isActive: false,
 		}
 	},
 	props: {
-		"list": Array,
-		"groupName": String,
+		"list": Object,
+		"checked": String,
+		"placeholder": String,
 	},
  	mounted() {
-    	this.checkedOption = this.groupName; 
+    	this.selectedInput = this.checked
   	},
 	watch:{
 		selectedInput(val){
@@ -49,11 +52,17 @@ export default {
 	},
   	methods: {
     	show() {
-			this.isActive=!this.isActive;
-		},
+				this.isActive=!this.isActive;
+			},
+			hide() {
+				this.isActive=false;
+			},
     	check(e) {
      		this.checkedOption = e.target.value
     	},
+  },
+	directives: {
+    ClickOutside
   }
 }
 </script>

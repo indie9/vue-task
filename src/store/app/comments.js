@@ -22,7 +22,7 @@ export default {
 		[mutation.SET_COMMENTS_LOADING]: (state, isLoading) => {
 			state.commentsLoading = isLoading
 		},
-        [mutation.SET_COMMENTS]: (state, commentData) => {
+    [mutation.SET_COMMENTS]: (state, commentData) => {
 			state.comments = commentData
 		},
 	

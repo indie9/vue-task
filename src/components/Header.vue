@@ -25,7 +25,7 @@
             <span class="username">{{userProfileData.username}}</span>
             <DropMenu >
                 <template v-slot:link>
-                    <img class="profile_foto" alt="avatar" width="42" height="42" :src="userProfileData.photoUrl"/>
+                    <img class="profile_foto" alt="" width="42" height="42" :src="userProfileData.photoUrl"/>
                 </template>
                 <a class='dropdown-content-item' >Посмотреть профиль</a>
                 <button class='dropdown-content-item'> Выйти </button>

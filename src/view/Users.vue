@@ -2,42 +2,40 @@
 <section class="main__wrapper">	
     <Title name="Пользователи" />	
     <section class='board'>	
-        <div>
+        <div v-if="!usersLoading">
             <div class="task_list">
-                <div class="userItem" v-for="item in usersData" :key="item.id"  >
-                    <router-link :to="{...Profile,params:{id:item.id}}"  class="lnk"> {{item.name}} </router-link>
+                <div class="userItem" v-for="item in Object.keys(userlist) " :key="item.id"  >
+                    <router-link :to="{...Profile,params:{id:item}}"  class="lnk"> {{userlist[item]}} </router-link>
                 </div>
             </div>
             <Pagination />
         </div>
-    
+         <div v-else> loading</div>
     </section>
 </section>
 </template>
 
 <script>
-
+import { mapGetters,mapActions } from 'vuex';
+import Plate from '../components/Plate.vue';
 export default {
     data() {
         return {
-            usersData: [
-            {
-                id: "1111111",
-                name: "Вупсень"
-            },
-            {
-                id: "2222222",
-                name: "Пупсень"
-            },
-            {
-                id: "3333333",
-                name: "Лунтик"
-            },
-            ],
             Profile: {
 				name: 'Profile',
 			},  
       	};
+    },
+    computed: {
+        ...mapGetters("tasks", ["loading", "tasks", "filter"]),
+        ...mapGetters("users", ["users", "userlist","usersLoading"]),
+    },
+    methods: {
+        ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
+        ...mapActions("users", ["fetchUsers"]),
+    },
+    mounted() {
+        this.fetchUsers();
     },
 }
 </script>

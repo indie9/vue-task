@@ -36,7 +36,7 @@
                 <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
                 <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
                 <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
+                <span  @click="deleteTask"  class="lnk dropdown-content-item" > Удалить </span>
               
             </DropMenu>
            
@@ -52,7 +52,7 @@
 import { mapGetters,mapActions } from 'vuex';
 import { Enum } from '../constants/enum';
 import DropMenu from './DropMenu.vue';
-
+import api from '@/api';
 
 export default {
     data() {
@@ -69,6 +69,7 @@ export default {
                     id: this.taskData.id
                 }
             },
+            
             Enum: Enum,
         };
     },
@@ -85,6 +86,10 @@ export default {
     methods: {
         ...mapActions("tasks", ["setLoading", "fetchTasks"]),
         ...mapActions("users", ["fetchUsers"]),
+        deleteTask(){
+          console.log("hi")
+          api.Events.deleteTask(this.taskData.id).then(() => this.fetchTasks(this.filter))
+        }
     },
     components: { DropMenu }
 }
