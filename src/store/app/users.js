@@ -13,11 +13,11 @@ export default {
 	state: {
 		
     users:[],
-		usersFilter:{
-			"filter": {},
-			"page": 0,
-			"limit": 100
-		},
+	usersFilter:{
+		"filter": {},
+		"page": 0,
+		"limit": 8
+	},
     userlist:{},
 		usersLoading: false,
 	},
@@ -25,20 +25,21 @@ export default {
 	getters: {
         users: state => state.users,
         userlist: state => state.userlist,
-				usersLoading: state => state.usersLoading,
+		usersLoading: state => state.usersLoading,
+		usersFilter: state => state.usersFilter
 	},
 
 	mutations: {
 		[mutation.SET_USERS_LOADING]: (state, isActive) => {
 			state.usersLoading = isActive
 		},
-    [mutation.SET_USERS]: (state, usersData) => {
+    	[mutation.SET_USERS]: (state, usersData) => {
 			state.users = usersData
 		},
 		[mutation.SET_USERS_FILTER]: (state, filterData) => {
 			state.usersFilter = filterData
 		},
-    [mutation.SET_USERLIST]: (state, userlist) => {
+    	[mutation.SET_USERLIST]: (state, userlist) => {
 			state.userlist = userlist
 		},
 	},
@@ -48,11 +49,11 @@ export default {
 			commit(mutation.SET_USERS_LOADING, value)
 		},
 
-    fetchUsers: ({ dispatch, commit }, filter) => {
+    	fetchUsers: ({ dispatch, commit }, filter) => {
 			dispatch('setLoading', true);
 			api.Events.getAllUsers()
                 .then(({data}) => { 
-                        commit(mutation.SET_USERS, data)
+
                         let ul = {};
                         data.map((item) => {
                             ul[item.id] = item.username; 
@@ -64,6 +65,19 @@ export default {
                         
                 })
 		},
-
+		fetchPageUsers: ({ dispatch, commit }, filter) => {
+			dispatch('setLoading', true);
+			console.log(filter)
+			api.Events.getUsers(filter)
+                .then(({data}) => { 
+                        commit(mutation.SET_USERS, data)
+                        dispatch('setLoading', false)       
+                })
+		},
+		setUsersFilter:  ({ dispatch, commit }, filter) => {
+			console.log(filter)
+			commit(mutation.SET_USERS_FILTER, filter)
+			dispatch('fetchPageUsers', filter);
+		},
 	},
 }

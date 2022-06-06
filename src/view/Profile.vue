@@ -1,22 +1,28 @@
 <template>
 	
     <section class="main__wrapper">	
-        <Title name="Имя пользователя" />	
+        <Title >
+            {{currentProfile.username}} 
+            <template v-slot:buttons>
+               <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить задачу</Button> </router-link>
+            </template>
+        </Title>		
         <section class='board'>					
             <section class="board__profile" >
                 <article class="board__profile-bio" >
-                    <img class="avatar" src='https://cdn-icons-png.flaticon.com/512/18/18601.png' alt="avatar" width="186" height="186" />
+                    <img class="avatar" :src="currentProfile.photoUrl ? currentProfile.photoUrl : 'https://cdn-icons-png.flaticon.com/512/18/18601.png'" alt="avatar" width="186" height="186" />
 
                     <p class="title">О себе</p>
 
                     <p class="profile-info">
-                    {{id}}
+                        {{currentProfile.about}}
                     </p>
 
                 </article>
                 <article class="board__profile-tasks" >
                     <p class="title"> Задачи </p>
-                    TaskBoard 
+                    <Task v-for="task in tasks.data" :key="task.id" :taskData="task" :short="true"/>
+                    <Pagination v-model="page"/>
                 </article>
             </section>
         </section>
@@ -24,15 +30,53 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from 'vuex';
 
 export default {
     data() {
         return {  
+            page: 0,
+            TaskEdit: {
+                name: "TaskEdit",
+                params: {
+                    id:"",
+                    assId: this.id
+                }
+            }, 
       	};
+    },
+    watch: {
+        page(val) {
+            this.setFilter({
+                "filter": this.filter.filter,
+                "page": val,
+                "limit": 8,
+            });
+        },
     },
     props: {
         id: String,
-    }
+    },
+    computed: {
+        ...mapGetters("tasks", ["loading", "tasks", "filter"]),
+        ...mapGetters("users", ["users", "userlist","usersLoading","usersFilter"]),
+        ...mapGetters("userprofile", ["userProfileData", "currentProfile"]),
+    },
+    methods: {
+        ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
+        ...mapActions("users", ["fetchUsers","fetchPageUsers","setUsersFilter"]),
+        ...mapActions("userprofile", ["getCurrentProfile","getUserData"]),
+    },
+    mounted() { 
+        this.getCurrentProfile(this.id);
+        this.setFilter({
+                "filter": {
+                    "assignedUsers":[this.id]
+                },
+                "page": 0,
+                "limit": 8,
+            });
+    },
 }
 </script>
 

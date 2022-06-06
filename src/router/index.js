@@ -9,8 +9,6 @@ import Unfound from '../view/Unfound'
 
 Vue.use(VueRouter)
 
-
-
 Vue.use(VueRouter)
 
 const router = () => {

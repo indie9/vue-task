@@ -1,7 +1,7 @@
 <template>
  <section class="main__wrapper">	
     <Title >
-      {{id ? "Редактирование" : "Создание"}}     
+      {{id ? "Редактирование" : "Создание"}}    
       <template v-slot:buttons>
         
           <Button class="btn primary"  @click="addTask" > 
@@ -19,7 +19,7 @@
             <div class="board__form-data">
                   <label for="user" class='taskPage-title'>Исполнитель</label>
                   
-                  <Select name="user" :list="userlist" placeholder="Исполнитель" :checked="id ? currentTask.assignedId : ''" v-model="taskForm.assignedId" /> 
+                  <Select name="user" :list="userlist" placeholder="Исполнитель" :checked="id ? currentTask.assignedId : assId ? assId : ''"  v-model="taskForm.assignedId" /> 
 
                   <label for="type" class='taskPage-title'>Тип</label>
 
@@ -76,7 +76,8 @@ export default {
         };
     },
     props: {
-        id: String
+        id: String,
+        assId: String,
     },
     computed: {
         ...mapGetters("tasks", ["loading", "tasks", "currentTask"]),

@@ -1,5 +1,5 @@
 <template>
-  <textarea :placeholder="placeholder" :width="width" :height="height"/>
+  <textarea :placeholder="placeholder" :width="width" :height="height" v-model="content"/>
 </template>
 
 <script>

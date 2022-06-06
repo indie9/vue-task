@@ -4,11 +4,11 @@
     <section class='board'>	
         <div v-if="!usersLoading">
             <div class="task_list">
-                <div class="userItem" v-for="item in Object.keys(userlist) " :key="item.id"  >
-                    <router-link :to="{...Profile,params:{id:item}}"  class="lnk"> {{userlist[item]}} </router-link>
+                <div class="userItem" v-for="item in users.data" :key="item.id"  >
+                    <router-link :to="{...Profile,params:{id:item.id}}"  class="lnk"> {{userlist[item.id]}} </router-link>
                 </div>
             </div>
-            <Pagination />
+            <Pagination v-model="page"/>
         </div>
          <div v-else> loading</div>
     </section>
@@ -17,25 +17,42 @@
 
 <script>
 import { mapGetters,mapActions } from 'vuex';
-import Plate from '../components/Plate.vue';
+
 export default {
     data() {
         return {
             Profile: {
 				name: 'Profile',
-			},  
+			}, 
+            page: 0, 
       	};
+    },
+    watch: {
+        page(val) {
+            this.setUsersFilter({
+                "filter": this.usersFilter.filter,
+                "page": val,
+                "limit": 8,
+            });
+        },
     },
     computed: {
         ...mapGetters("tasks", ["loading", "tasks", "filter"]),
-        ...mapGetters("users", ["users", "userlist","usersLoading"]),
+        ...mapGetters("users", ["users", "userlist","usersLoading","usersFilter"]),
     },
     methods: {
         ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
-        ...mapActions("users", ["fetchUsers"]),
+        ...mapActions("users", ["fetchUsers","fetchPageUsers","setUsersFilter"]),
     },
     mounted() {
+        
         this.fetchUsers();
+        console.log(this.usersFilter)
+        this.fetchPageUsers({
+                "filter": {},
+                "page": 0,
+                "limit": 8
+	        });
     },
 }
 </script>

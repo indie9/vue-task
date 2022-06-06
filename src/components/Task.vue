@@ -14,7 +14,7 @@
           </div>
 
    
-          <div  class="task_inner-item task_autor">
+          <div  class="task_inner-item task_autor" v-show="!short">
            	{{userlist[taskData.assignedId]}}
           </div>
     
@@ -26,7 +26,7 @@
           <div class="task_inner-item task_priority priority-low" >{{taskData.rank}}</div>
 
    
-          <div class="task_btn">
+          <div class="task_btn"  v-show="!short">
            <DropMenu >
              <template v-slot:link>
                <span class="dropdown-btn"> &#9776;</span>
@@ -34,9 +34,11 @@
               
               
                 <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-                <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link>
-                <span  @click="deleteTask"  class="lnk dropdown-content-item" > Удалить </span>
+                <button class="lnk dropdown-content-item" @click="status('opened')" v-show="taskData.status !== 'opened'"> Переоткрыть </button>
+                <button class="lnk dropdown-content-item" @click="status('inProgress')" v-show="taskData.status === 'opened'"> Взять в работу</button>
+                <button class="lnk dropdown-content-item" @click="status('complete')" v-show="taskData.status !== 'complete'"> Готово </button>
+                <button class="lnk dropdown-content-item" @click="status('testing')" v-show="taskData.status === 'inProgress'"> На тестирование</button>
+                <span @click="deleteTask"  class="lnk dropdown-content-item" :style="{ color: 'red'}"> Удалить </span>
               
             </DropMenu>
            
@@ -75,6 +77,11 @@ export default {
     },
     props: {
         taskData: Object,
+        short:{
+          type: Boolean,
+          default: false
+        },
+        
     },
     computed: {
         ...mapGetters("tasks", ["loading", "tasks", "filter"]),
@@ -89,6 +96,10 @@ export default {
         deleteTask(){
           console.log("hi")
           api.Events.deleteTask(this.taskData.id).then(() => this.fetchTasks(this.filter))
+        },
+        status(value){
+           api.Events.changeStatus(this.taskData.id,value).then(() => this.fetchTasks(this.filter))
+
         }
     },
     components: { DropMenu }

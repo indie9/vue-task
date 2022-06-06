@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Checkbox from './Checkbox.vue';
+
 
 export default {
     data() {
@@ -48,7 +48,7 @@ export default {
 			this.isActive=!this.isActive;
 		},
     },
-    components: { Checkbox }
+    
 }
 </script>
 

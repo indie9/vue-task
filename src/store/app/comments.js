@@ -3,7 +3,7 @@ import api from '@/api'
 
 export const mutation = {
 	SET_COMMENTS_LOADING: 'SET_COMMENTS_LOADING',
-    SET_COMMENTS: 'SET_TASKS',
+    SET_COMMENTS: 'SET_COMMENTS',
 }
 
 export default {
@@ -22,7 +22,7 @@ export default {
 		[mutation.SET_COMMENTS_LOADING]: (state, isLoading) => {
 			state.commentsLoading = isLoading
 		},
-    [mutation.SET_COMMENTS]: (state, commentData) => {
+    	[mutation.SET_COMMENTS]: (state, commentData) => {
 			state.comments = commentData
 		},
 	
@@ -33,14 +33,13 @@ export default {
 			commit(mutation.SET_COMMENTS_LOADING, value)
 		},
         fetchComments: ({ dispatch, commit }, id) => {
-			
 			dispatch('setLoading', true)
 			api.Events.getComments(id)
                 .then(({data}) => {
                         dispatch('setLoading', false)
-                        commit(mutation.SET_COMMENTS, data)
-						
+                        commit(mutation.SET_COMMENTS, data)	
                 })
 		},
+		
 	},
 }

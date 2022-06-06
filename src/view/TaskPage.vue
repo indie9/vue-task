@@ -44,11 +44,12 @@
             <form class="taskPage-comments" >
                 <p class='taskPage-title'>Коментарии </p>
                 <Textarea
-                class='taskPage-textArea'
-                placeholder="Текст комментария"
-                required
+                  class='taskPage-textArea'
+                  placeholder="Текст комментария"
+                  required
+                  v-model="commentText"
                 />
-                <Button class='btn success'> Добавить комментарий</Button>
+                <Button class='btn success' @click="addComment"> Добавить комментарий</Button>
                 
                 <div class="comments-list">
                    
@@ -73,11 +74,13 @@ import { mapGetters,mapActions } from 'vuex';
 import { Enum } from '../constants/enum';
 import moment from "moment";
 import "moment/locale/ru";
+import api from '@/api';
 
 export default {
     data() {
         return { 
-          Enum: Enum, 
+          Enum: Enum,
+          commentText:"" 
       	};
     },
     props: {
@@ -94,6 +97,15 @@ export default {
         ...mapActions('comments',["fetchComments"]),
         moment(date) {
           return moment(date).format('DD.MM.YYYY h:mm');
+        },
+        addComment(){
+          if (this.commentText) { 
+            api.Events.addComment({
+              "taskId": this.id,
+              "userId": localStorage.getItem("userId"),
+              "text": this.commentText,
+            }).then(() =>  this.fetchComments(this.id))
+          }
         },
         getNoun(number, one, two, five) {
           let n = Math.abs(number);

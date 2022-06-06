@@ -55,6 +55,11 @@ export default {
     },
     mounted() {
         this.page = this.filter.page;
+        this.setFilter({
+                "filter": {},
+                "page": 0,
+                "limit": 8,
+            });
         this.fetchTasks({
             "filter": this.filter.filter,
             "page": this.filter.page,

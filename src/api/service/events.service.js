@@ -37,7 +37,7 @@ export default api => {
 			return api.instance.request({
 				method: 'put',
 				url:'comments/createOrEdit',
-				params: commentData
+				data: commentData
 			})
 		},
 		removeComment(id){
@@ -69,7 +69,7 @@ export default api => {
 		getUsers(filter) {
 			return api.instance.request({
 				method: 'post',
-				url: `users`,
+				url: "users",
 				data: filter
 			})
 		},
