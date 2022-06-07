@@ -1,5 +1,5 @@
 <template>
-  <input type="text" :placeholder="placeholder" v-model="content" />
+  <input type="text" :placeholder="placeholder" v-model="contentModel" />
 </template>
 
 <script>
@@ -10,13 +10,25 @@ export default {
       content: this.value,
 		}
 	},
+  computed: {
+    contentModel:{
+        get () {
+          return this.content
+        },
+        set (val) {
+          this.content = val
+          this.$emit('input', val)
+        }
+    } 
+  },
   props:{
     "placeholder": String,
     "value": String,
   },
   watch:{
-    content(){
-      this.$emit('input', this.content)
+    value(){
+      // console.log(contentModel)
+      this.content = this.value
     }
   },
 }

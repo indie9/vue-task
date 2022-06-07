@@ -1,11 +1,11 @@
 <template>
 	<div class="checkbox" >
         <input
-			class="custom-checkbox"
-			type="checkbox"
-			:id="item"
-			:value="item"
-			v-on="$listeners"
+					class="custom-checkbox"
+					type="checkbox"
+					:id="item"
+					:value="item"
+					v-on="$listeners"
             />
         <label :for="item">
             <slot></slot>
