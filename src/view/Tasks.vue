@@ -4,9 +4,7 @@
             
             Задачи 
             
-            <template v-slot:subTitle>
-              <Plate class="inProgress" > Открыто </Plate>
-            </template>
+            
             <template v-slot:buttons>
                <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить</Button> </router-link>
             </template>

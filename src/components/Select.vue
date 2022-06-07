@@ -72,11 +72,12 @@ export default {
 
 .selectMultiselect {
 	width: 100%;
-	overflow: hidden;
+	//overflow: hidden;
 	padding: 2px 0;
 	box-sizing: content-box;
 	background-color: #fff;
-
+	position: absolute;
+	
 	&-selectBox {
 		position: relative;
 	}
@@ -100,21 +101,23 @@ export default {
 	}
 	}
 	.selectCheckboxes {
-	display: flex;
-	flex-direction: column;
-	background-color: white;
-	width: 100%;
-	z-index: 99;
-
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		width: 100%;
+		height: 100%;
+	 	z-index: 99;
+		
 	}
 	.checkbox{
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: flex-end;
-	align-items: center;
-	height: 24px;
-	margin: 2px 0 2px 0;
-	border: 1x solid $primary;
+		background-color: white;
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		align-items: center;
+		height: 24px;
+		border: 1x solid $primary;
+		z-index: 99;
 	}
 	.custom-checkbox{
 	position: absolute;
@@ -125,10 +128,11 @@ export default {
 	padding: 0;
 	}
 .custom-checkbox+label{
+		background-color: white;
     width:100%;
     line-height: 24px;
     padding-left: 10px;
-    
+    z-index: 99;
 }
 	
 

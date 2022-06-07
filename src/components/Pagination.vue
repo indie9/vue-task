@@ -10,7 +10,7 @@
 
 		<Button class='btn default' @click="endPage"> Конец </Button>
 		
-   		<span class="pagination-info"> Показано 8 из 28</span>
+   		<span class="pagination-info"> Показано {{(page+1)*8}} из ?</span>
 
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
 		page(){
 			return this.$attrs.value
 		},
-		...mapGetters("tasks",  ["tasks" ])
 	},
 	methods: {
 		firstPage(){

@@ -47,6 +47,7 @@ export default {
 	   loginSend(e){
 		   e.preventDefault();
 		   this.login(this.form);
+			 
 	   },
 	   
     },

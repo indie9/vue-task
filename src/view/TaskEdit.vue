@@ -17,18 +17,27 @@
     <section class='board' v-else>	
 	    <form class="board__form" id="taskFormID">
             <div class="board__form-data">
-                  <label for="user" class='taskPage-title'>Исполнитель</label>
+                  <label for="user" class='taskPage-title'>
+                    Исполнитель
+                    <Select name="user" :list="userlist" placeholder="Исполнитель" :checked="id ? currentTask.assignedId : assId ? assId : ''"  v-model="taskForm.assignedId" /> 
+                  </label>
                   
-                  <Select name="user" :list="userlist" placeholder="Исполнитель" :checked="id ? currentTask.assignedId : assId ? assId : ''"  v-model="taskForm.assignedId" /> 
+                 
 
-                  <label for="type" class='taskPage-title'>Тип</label>
+                  <label for="type" class='taskPage-title'>
+                    Тип
+                    <Select name="user" :list="typeList" placeholder="Тип" :checked="id ? currentTask.type : ''" v-model="taskForm.type" />
+                  </label>
 
-                  <Select name="user" :list="typeList" placeholder="Тип" :checked="id ? currentTask.type : ''" v-model="taskForm.type" /> 
+                   
 
 
-                  <label for="rank" class='taskPage-title'>Приоритет</label>
+                  <label for="rank" class='taskPage-title'>
+                    Приоритет
+                    <Select name="user" :list="rankList" placeholder="Приоритет" :checked="id ? currentTask.rank : ''"  v-model="taskForm.rank" />
+                  </label>
 
-                  <Select name="user" :list="rankList" placeholder="Приоритет" :checked="id ? currentTask.rank : ''"  v-model="taskForm.rank" /> 
+                   
 
 
             </div>
@@ -147,6 +156,11 @@ export default {
       display: flex;
       flex-direction: column;
       padding: 0 20px;
+      & .taskPage-title{
+        width: 100%;
+        position: relative;
+        margin-bottom: 40px;
+      }
     }
     &-info{
       width: 35%;
@@ -156,6 +170,7 @@ export default {
       padding: 0 20px;
       border-right: #B5B5B5 solid 2px;
       border-left: #B5B5B5 solid 2px;
+      
     }
     &-comments{
       width: 40%;

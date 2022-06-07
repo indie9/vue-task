@@ -84,12 +84,14 @@ export default {
 	}
 	}
 	.checkboxes {
-	display: flex;
-	flex-direction: column;
-	background-color: white;
-	width: 98%;
-	margin: auto;
-	padding: 5px;
+
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		width: 98%;
+		margin: auto;
+		padding: 5px;
+		
 	label::before {
 		content: 'X';
 		display: inline-block;

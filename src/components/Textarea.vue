@@ -1,5 +1,5 @@
 <template>
-  <textarea :placeholder="placeholder" :width="width" :height="height" v-model="content"/>
+  <textarea :placeholder="placeholder" v-model="content"/>
 </template>
 
 <script>
@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
   textarea{
-	height: 300px;
+	
     padding-left: 5px;
     margin: 2px 0;
     box-shadow: inset 0px 0px 2px 1px #B5B5B5;

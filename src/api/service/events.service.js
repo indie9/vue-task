@@ -50,7 +50,7 @@ export default api => {
 			return api.instance.request({
 				method: 'patch',
 				url:`tasks/${id}/worktime`,
-				params: timeData
+				data: timeData
 			})
 		},
 		changeStatus(id,status) {

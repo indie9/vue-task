@@ -1,6 +1,8 @@
 <template>
 <section class="main__wrapper">	
-    <Title name="Пользователи" />	
+    <Title >
+        Пользователи 
+    </Title>	
     <section class='board'>	
         <div v-if="!usersLoading">
             <div class="task_list">

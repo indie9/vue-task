@@ -1,6 +1,22 @@
 <template>
   <section class="main__wrapper">	
-    <Title :name="currentTask.title" />	
+    <Title >
+            
+            {{currentTask.title}}       
+            <template v-slot:subTitle>
+              <Plate :class="currentTask.status" > {{currentTask.status}} </Plate>
+            </template>
+            <template v-slot:buttons>
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item">
+                 <Button class="btn primary"> Редактировать </Button>
+                </router-link>
+                <Button class="btn default" @click="status('opened')" v-show="currentTask.status !== 'opened'"> Переоткрыть </Button>
+                <Button class="btn default" @click="status('inProgress')" v-show="currentTask.status === 'opened'"> Взять в работу</Button>
+                <Button class="btn default" @click="status('complete')" v-show="currentTask.status !== 'complete'"> Готово </Button>
+                <Button class="btn default" @click="status('testing')" v-show="currentTask.status === 'inProgress'"> На тестирование</Button>             
+                <Button class="btn error" @click="deleteTask" > Удалить </Button>
+            </template>
+        </Title>		
     <section class='board'>	
         <div v-if="loading || commentsLoading">loading</div>
         <section class="taskPage" v-else>
@@ -27,9 +43,27 @@
                 <p class='taskPage-title'>Затрачено времени</p>
 
                 <p>
-                {{getNoun(Math.floor(currentTask.timeInMinutes%60)," Минута "," Минуты "," Минут ")}}
-                  
-
+                {{
+                  Math.floor((currentTask.timeInMinutes/1440))
+                  ? 
+                  getNoun(Math.floor(currentTask.timeInMinutes/1440)," День "," Дня "," Дней ")
+                  : 
+                  ""
+                }}
+                {{
+                  Math.floor((currentTask.timeInMinutes%1440)/60)
+                  ? 
+                  getNoun(Math.floor((currentTask.timeInMinutes%1440)/60)," Час "," Часа "," Часов ")
+                  : 
+                  ""
+                }}
+                {{
+                  Math.floor(currentTask.timeInMinutes%60)
+                  ? 
+                  getNoun(Math.floor(currentTask.timeInMinutes%60)," Минута "," Минуты "," Минут ")
+                  : 
+                  ""
+                }}
                 </p>
 
                 <Button class='btn primary' @click="modalVisable">Сделать запись о работе</Button>
@@ -71,34 +105,41 @@
     </section>
     <ModalWindow v-show="showModal"> 
       <div class="modal_board-title"> Запись о работе </div>
-              <form  class='modal_board-form' id='modal_form' onSubmit="editTime">
+              <form  class='modal_board-form' id='modal_form' @submit="editTime">
 
-                <label for="time" class='taskPage-title'>Затраченое время</label>
+                <label for="time" class='taskPage-title'>Затраченое время
                     <Input
                       type="number"
                       class="board__input board__input--theme"
                       name="time"
                       placeholder="Время"
                       required
+                      v-model="formTime.timeInMinutes"
                     />
-                <label for="username" class='taskPage-title'>Единица измерения</label>
+                  </label>
+                <label for="username" class='taskPage-title' id="forselect" >Единица измерения
                     <Select
                       class="board__input board__input--theme"
                       name="username"
                       placeholder="Единица измерения"
                       :list="timeList"
                       required
+                      :style="{ top: '14px',position: 'absolute'}"
+                      v-model="formTime.multiply"
+                      :checked="'1'"
                     >
                     </Select>
-
-                <label for="about" class='taskPage-title'>Коментарий</label>
-                    <Textarea
+                </label>
+                <label for="about" class='taskPage-title'>Коментарий
+                   <Textarea
                       type="text"
                       class="board__input board__input--theme"
                       name="about"
                       placeholder="Ваш коментарий"
+                      v-model="formTime.comment"
                       required
                     > </Textarea>
+                  </label>
               </form>
               <div class="modal_board-buttons">
                 <Button class='btn primary' form='modal_form' type="submit" > Сохранить </Button>
@@ -123,10 +164,25 @@ export default {
             commentText: "",
             showModal: false,
             timeList: {
-              '1':'Минута',
-              '60':'Час',
-              '1440':'День',
-            }
+              1:'Минута',
+              60:'Час',
+              1440:'День',
+            },
+            formTime:{
+              timeInMinutes: "0",
+              comment: "",
+              currentUser: localStorage.getItem('userId'),
+              multiply: "1",
+            },
+            TaskEdit: {
+                name: "TaskEdit",
+                params: {
+                    id: this.id
+                }
+            },
+            Tasks: {
+			          name: 'Tasks',
+			      },
         };
     },
     props: {
@@ -179,6 +235,29 @@ export default {
         modalVisable(){ 
           this.showModal = !this.showModal;
         },
+        editTime(e){
+          e.preventDefault();
+          api.Events.addTime(this.id,{
+              "timeInMinutes": this.formTime.timeInMinutes * this.formTime.multiply,
+              "comment": this.formTime.comment,
+              "currentUser": localStorage.getItem('userId'),
+            }).then(() => {
+              this.formTime.timeInMinutes = "0";
+              this.formTime.comment = ""
+              this.formTime.multiply = "1" 
+              this.getTask(this.id);
+              this.fetchComments(this.id);
+            })
+          this.showModal = false;
+       
+        },
+        deleteTask(){
+          api.Events.deleteTask(this.currentTask.id).then(()=> this.$router.push('/'))
+        },
+        status(value){
+           api.Events.changeStatus(this.currentTask.id,value).then(() => this.getTask(this.id))
+
+        }
     },
     watch: {},
     mounted() {
@@ -286,7 +365,10 @@ export default {
       padding: 0 30px;
       height: 276px;
       & .taskPage-title{
+        position: relative;
         margin: 20px 0 5px 0;
+        display: flex;
+        flex-direction: column;
       }
 
     }
@@ -298,5 +380,8 @@ export default {
       display: flex;
       align-items: center;
     }
+  }
+  #forselect{
+     margin: 20px 0 30px 0;
   }
 </style>
