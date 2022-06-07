@@ -104,6 +104,7 @@ export default {
 	flex-direction: column;
 	background-color: white;
 	width: 100%;
+	z-index: 99;
 
 	}
 	.checkbox{

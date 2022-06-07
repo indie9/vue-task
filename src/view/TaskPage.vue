@@ -32,7 +32,7 @@
 
                 </p>
 
-                <Button class='btn primary' >Сделать запись о работе</Button>
+                <Button class='btn primary' @click="modalVisable">Сделать запись о работе</Button>
 
             </div>
 
@@ -54,7 +54,10 @@
                 <div class="comments-list">
                    
                     <div class="comment-item" v-for="coment in comments" :key="coment.id" >
-                      <p class='comment-title'>{{userlist[coment.userId]}} <Button class='btn error' v-show="true">Удалить</Button></p>
+                      <p class='comment-title'>
+                        {{userlist[coment.userId]}} 
+                        <Button type="button" class='btn error' v-show="loginFlag == coment.userId" @click="deleteComment(coment.id)">Удалить</Button>
+                      </p>
                       <p class='comment-body'>{{coment.text}}</p>
                     </div>
                 
@@ -66,6 +69,42 @@
           </section>
         
     </section>
+    <ModalWindow v-show="showModal"> 
+      <div class="modal_board-title"> Запись о работе </div>
+              <form  class='modal_board-form' id='modal_form' onSubmit="editTime">
+
+                <label for="time" class='taskPage-title'>Затраченое время</label>
+                    <Input
+                      type="number"
+                      class="board__input board__input--theme"
+                      name="time"
+                      placeholder="Время"
+                      required
+                    />
+                <label for="username" class='taskPage-title'>Единица измерения</label>
+                    <Select
+                      class="board__input board__input--theme"
+                      name="username"
+                      placeholder="Единица измерения"
+                      :list="timeList"
+                      required
+                    >
+                    </Select>
+
+                <label for="about" class='taskPage-title'>Коментарий</label>
+                    <Textarea
+                      type="text"
+                      class="board__input board__input--theme"
+                      name="about"
+                      placeholder="Ваш коментарий"
+                      required
+                    > </Textarea>
+              </form>
+              <div class="modal_board-buttons">
+                <Button class='btn primary' form='modal_form' type="submit" > Сохранить </Button>
+                <Button class='btn default' type="button" @click="modalVisable"> Отмена </Button>
+              </div>
+    </ModalWindow>
   </section>
 </template>
 
@@ -75,64 +114,79 @@ import { Enum } from '../constants/enum';
 import moment from "moment";
 import "moment/locale/ru";
 import api from '@/api';
+import ModalWindow from '../components/ModalWindow.vue';
 
 export default {
     data() {
-        return { 
-          Enum: Enum,
-          commentText:"" 
-      	};
+        return {
+            Enum: Enum,
+            commentText: "",
+            showModal: false,
+            timeList: {
+              '1':'Минута',
+              '60':'Час',
+              '1440':'День',
+            }
+        };
     },
     props: {
         id: String
     },
     computed: {
-        ...mapGetters('tasks',["loading", "tasks", "filter","currentTask"]),
-        ...mapGetters('users',["users", "userlist"]),
-        ...mapGetters('comments',["comments", "commentsLoading"]),
+        ...mapGetters("tasks", ["loading", "tasks", "filter", "currentTask"]),
+        ...mapGetters("users", ["users", "userlist"]),
+        ...mapGetters("comments", ["comments", "commentsLoading"]),
+        loginFlag() {
+            return localStorage.getItem("userId");
+        },
     },
     methods: {
-        ...mapActions('tasks',["setLoading", "fetchTasks","getTask"]),
-        ...mapActions('users',["fetchUsers"]),
-        ...mapActions('comments',["fetchComments"]),
+        ...mapActions("tasks", ["setLoading", "fetchTasks", "getTask"]),
+        ...mapActions("users", ["fetchUsers"]),
+        ...mapActions("comments", ["fetchComments"]),
         moment(date) {
-          return moment(date).format('DD.MM.YYYY h:mm');
+            return moment(date).format("DD.MM.YYYY h:mm");
         },
-        addComment(){
-          if (this.commentText) { 
-            api.Events.addComment({
-              "taskId": this.id,
-              "userId": localStorage.getItem("userId"),
-              "text": this.commentText,
-            }).then(() =>  this.fetchComments(this.id))
-          }
+        addComment() {
+            if (this.commentText) {
+                api.Events.addComment({
+                    "taskId": this.id,
+                    "userId": localStorage.getItem("userId"),
+                    "text": this.commentText,
+                }).then(() => this.fetchComments(this.id));
+            }
+            this.commentText = "";
+        },
+        deleteComment(id) {
+            api.Events.removeComment(id)
+                .then(() => this.fetchComments(this.id));
         },
         getNoun(number, one, two, five) {
-          let n = Math.abs(number);
-          n %= 100;
-          if (n >= 5 && n <= 20) {
+            let n = Math.abs(number);
+            n %= 100;
+            if (n >= 5 && n <= 20) {
+                return number + five;
+            }
+            n %= 10;
+            if (n === 1) {
+                return number + one;
+            }
+            if (n >= 2 && n <= 4) {
+                return number + two;
+            }
             return number + five;
-          }
-          n %= 10;
-          if (n === 1) {
-            return number + one;
-          }
-          if (n >= 2 && n <= 4) {
-            return number + two;
-          }
-          return number + five;
+        },
+        modalVisable(){ 
+          this.showModal = !this.showModal;
         },
     },
-    watch:{
-      comments() {
-        console.log(this.comments)
-      }
-    },
+    watch: {},
     mounted() {
         this.getTask(this.id);
-        this.fetchComments(this.id)
-        this.fetchUsers()
+        this.fetchComments(this.id);
+        this.fetchUsers();
     },
+    components: { ModalWindow }
 }
 </script>
 
@@ -216,5 +270,33 @@ export default {
     }
   }
 }
+.modal_board{
+    &-title{
+      font-size: 20px;
+      height: 67px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+    }
+    &-form{
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #B5B5B5;
+      border-bottom: 1px solid #B5B5B5;
+      padding: 0 30px;
+      height: 276px;
+      & .taskPage-title{
+        margin: 20px 0 5px 0;
+      }
 
+    }
+    &-buttons{
+      display: flex;
+      flex-direction: row;
+      padding: 0 30px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+  }
 </style>
