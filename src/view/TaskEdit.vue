@@ -19,14 +19,14 @@
             <div class="board__form-data">
                   <label for="user" class='taskPage-title'>
                     Исполнитель
-                    <Select name="user" :list="userlist" placeholder="Исполнитель" :checked="id ? currentTask.assignedId : assId ? assId : ''"  v-model="taskForm.assignedId" /> 
+                    <Select name="user" :list="userlist" placeholder="Исполнитель"   v-model="taskForm.assignedId" /> 
                   </label>
                   
                  
 
                   <label for="type" class='taskPage-title'>
                     Тип
-                    <Select name="user" :list="typeList" placeholder="Тип" :checked="id ? currentTask.type : ''" v-model="taskForm.type" />
+                    <Select name="user" :list="typeList" placeholder="Тип"  v-model="taskForm.type" />
                   </label>
 
                    
@@ -34,7 +34,7 @@
 
                   <label for="rank" class='taskPage-title'>
                     Приоритет
-                    <Select name="user" :list="rankList" placeholder="Приоритет" :checked="id ? currentTask.rank : ''"  v-model="taskForm.rank" />
+                    <Select name="user" :list="rankList" placeholder="Приоритет"  v-model="taskForm.rank" />
                   </label>
 
                    
@@ -80,7 +80,7 @@ export default {
                 "title": "",
                 "description": "",
                 "type": "",
-                "rank": ""
+                "rank":"",
           }
         };
     },
@@ -109,8 +109,11 @@ export default {
     mounted() {
         if (this.id) { this.getTask(this.id) }
         
-        if (this.userlist) { this.fetchUsers() }
+        if (!this.userlist) { this.fetchUsers() }
         
+        if(this.assId){
+           this.taskForm.assignedId = this.assId;
+        }
     },
 
 }

@@ -83,7 +83,7 @@ export default api => {
 			return api.instance.request({
 				method: 'put',
 				url:'users/edit',
-				params: form
+				data: form
 			})
 		},
 		getLogin(form) {

@@ -6,7 +6,7 @@
             
             
             <template v-slot:buttons>
-               <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить</Button> </router-link>
+                    <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить</Button> </router-link>
             </template>
         </Title>	
 
@@ -16,7 +16,10 @@
 
         <section class='board' v-else>	     
             <Sorting />
-            <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
+            <div class="task_list">
+                 <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
+            </div>
+           
             <Pagination v-model="page"/>
         </section>
 
@@ -93,5 +96,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.task_list{
+  border-radius: 3px;
+  border: solid 1px $inner-shadow;
+  margin-bottom: auto;
 }
 </style>

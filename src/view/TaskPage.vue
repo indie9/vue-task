@@ -126,7 +126,7 @@
                       required
                       :style="{ top: '14px',position: 'absolute'}"
                       v-model="formTime.multiply"
-                      :checked="'1'"
+                      
                     >
                     </Select>
                 </label>
@@ -232,7 +232,7 @@ export default {
             }
             return number + five;
         },
-        modalVisable(){ 
+        modalVisable(){   
           this.showModal = !this.showModal;
         },
         editTime(e){

@@ -36,8 +36,7 @@ export default {
 		
 	},
     mounted() {
-		//localStorage.clear();
-		console.log(this.loginFlag)
+		
 		if (this.loginFlag){
 			this.getUserData(this.loginFlag)
 		}

@@ -14,9 +14,8 @@
                   :name="placeholder"
                   :id="item"
 									:value="item" 
-									v-model="selectedInput"
-									
-									@change="check"
+									v-model="selectedInputModel"
+								
                 />
                 <label :for="item" :name="placeholder" >
                  {{list[item]}}
@@ -32,34 +31,46 @@ import ClickOutside from 'vue-click-outside'
 export default {
 	data() {
 		return {
-
-			selectedInput: "",
+			selectedInput: this.selectedInputItem || "",
 			isActive: false,
 		}
+	},
+	model: {
+		prop: 'selectedInputItem',
+		event: 'change'
+  },
+	computed: {
+		selectedInputModel:{
+			get () {
+				return this.selectedInput
+			},
+			set (val) {
+				this.selectedInput = val;
+				this.$emit('change', val)
+			}
+		} 
 	},
 	props: {
 		"list": Object,
 		"checked": String,
 		"placeholder": String,
+		selectedInputItem: String,
 	},
  	mounted() {
-    	this.selectedInput = this.checked
+    	// this.selectedInput = this.checked
   	},
 	watch:{
-		selectedInput(val){
-			this.$emit('input', val);
+		selectedInputItem(){
+			this.selectedInput = this.selectedInputItem
 		}
 	},
-  	methods: {
-    	show() {
-				this.isActive=!this.isActive;
-			},
-			hide() {
-				this.isActive=false;
-			},
-    	check(e) {
-     		this.checkedOption = e.target.value
-    	},
+  methods: {
+    show() {
+			this.isActive=!this.isActive;
+		},
+		hide() {
+			this.isActive=false;
+		},
   },
 	directives: {
     ClickOutside

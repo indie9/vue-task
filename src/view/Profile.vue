@@ -3,7 +3,8 @@
     <section class="main__wrapper">	
         <Title >
             {{currentProfile.username}} 
-            <template v-slot:buttons>
+            <template v-slot:buttons> 
+                <Button class="btn default" v-show="show"  @click="modalVisable"> Редактировать </Button>
                <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить задачу</Button> </router-link>
             </template>
         </Title>		
@@ -21,11 +22,50 @@
                 </article>
                 <article class="board__profile-tasks" >
                     <p class="title"> Задачи </p>
-                    <Task v-for="task in tasks.data" :key="task.id" :taskData="task" :short="true"/>
-                    <Pagination v-model="page"/>
+                    <div class="task_list" v-if="loading">
+                        loading...
+                    </div>
+                    <div class="task_list" v-else-if="tasks.data[0]">
+                        <Task v-for="task in tasks.data" :key="task.id" :taskData="task" :short="true"/>
+                    </div>
+                    <div class="task_list" v-else>
+                        Пользователь свободен от задач, накидайте-ка ему что-нибдуь
+                    </div>
+                    <Pagination v-model="page" v-show="tasks.data[0]" />
                 </article>
             </section>
         </section>
+
+         <ModalWindow  v-show="showModal"> 
+            <div class="modal_board-title"> Редактирование пользователя </div>
+              <form  class='modal_board-form' id='modal_form' @submit="editProfile">
+                <label htmlFor="username" class='taskPage-title'>Имя пользователя</label>
+                    <Input
+                      type="text"
+                      class="board__input board__input--theme"
+                      name="username"
+                      v-model="formUser.username"
+                    />
+                <label htmlFor="photoUrl" class='taskPage-title'>URL фотографии</label>
+                    <Input
+                      type="text"
+                      class="board__input board__input--theme"
+                      name="photoUrl"
+                      v-model="formUser.photoUrl"
+                    />
+                <label htmlFor="about" class='taskPage-title'>О себе</label>
+                    <Textarea
+                      type="text"
+                      class="board__input board__input--theme"
+                      name="about"
+                      v-model="formUser.about"
+                    > </Textarea>
+              </form>
+              <div class="modal_board-buttons">
+                <Button class='btn primary' form='modal_form' type="submit" > Сохранить </Button>
+                <Button class='btn default' type="button" @click="modalVisable"> Отмена </Button>
+              </div>
+        </ModalWindow>
     </section>
 </template>
 
@@ -36,6 +76,15 @@ export default {
     data() {
         return {  
             page: 0,
+            showModal: false,
+            formUser:{
+                id: this.id,
+                login: "",
+                username: "",
+                about: "",
+                photoUrl: "",
+                password: ""
+            },
             TaskEdit: {
                 name: "TaskEdit",
                 params: {
@@ -53,6 +102,21 @@ export default {
                 "limit": 8,
             });
         },
+        id(){
+            this.getCurrentProfile(this.id);
+            this.setFilter({
+                "filter": {
+                    "assignedUsers":[this.id]
+                },
+                "page": 0,
+                "limit": 8,
+            });
+        },
+        userProfileData(){
+            this.formUser ={...this.userProfileData}
+            this.formUser.password = localStorage.getItem("userPass")
+            this.getCurrentProfile(this.id);
+        }
     },
     props: {
         id: String,
@@ -61,13 +125,27 @@ export default {
         ...mapGetters("tasks", ["loading", "tasks", "filter"]),
         ...mapGetters("users", ["users", "userlist","usersLoading","usersFilter"]),
         ...mapGetters("userprofile", ["userProfileData", "currentProfile"]),
+        show(){
+            return localStorage.getItem("userId") === this.id
+        }
     },
     methods: {
         ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
         ...mapActions("users", ["fetchUsers","fetchPageUsers","setUsersFilter"]),
-        ...mapActions("userprofile", ["getCurrentProfile","getUserData"]),
+        ...mapActions("userprofile", ["getCurrentProfile","getUserData","editUserProfile"]),
+        modalVisable(){   
+            this.showModal = !this.showModal;
+        },
+        editProfile(e){
+            e.preventDefault();
+            this.showModal = !this.showModal;
+            this.editUserProfile(this.formUser);
+        }
     },
-    mounted() { 
+    mounted() {
+        if (localStorage.getItem("userId") === this.id){
+            this.getUserData(this.id);
+        }
         this.getCurrentProfile(this.id);
         this.setFilter({
                 "filter": {
@@ -104,10 +182,11 @@ export default {
             margin: 20px 0 5px 0;
         }
         & .profile-info{
-            white-space:pre-wrap;
+            
             color: #333333;
-            color: var(--text-color);
+            color: $text-color;
             line-height: 19px;
+            
         }   
     }
     &-tasks{
@@ -127,5 +206,42 @@ export default {
             }
         }
     }
+}
+.modal_board{
+    &-title{
+      font-size: 20px;
+      height: 67px;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+    }
+    &-form{
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #B5B5B5;
+      border-bottom: 1px solid #B5B5B5;
+      padding: 0 30px;
+      height: 276px;
+      & .taskPage-title{
+        position: relative;
+        margin: 20px 0 5px 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+    }
+    &-buttons{
+      display: flex;
+      flex-direction: row;
+      padding: 0 30px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .task_list{
+  border-radius: 3px;
+  border: solid 1px $inner-shadow;
+  margin-bottom: auto;
 }
 </style>

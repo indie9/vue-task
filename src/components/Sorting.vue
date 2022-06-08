@@ -50,10 +50,11 @@ export default {
 	
 	computed: {
 	    ...mapGetters("users", ["users", "userlist"]),
-		
+		  ...mapGetters("tasks", [ "filter"]),
 	},
 	mounted() {
-		
+    
+		this.form =  {...this.form,...this.filter.filter};
 	},
 	methods: {
         ...mapActions("tasks", ["setLoading", "fetchTasks","setFilter"]),
@@ -67,13 +68,14 @@ export default {
         },
         resetForm(e){
             e.preventDefault();
-
-            // this.fetchTasks({
-            //     "filter": {},
-            //     "page": 0,
-            //     "limit": 8,
-            // });
-            this.form.rank = ["low","high"]
+            this.setFilter({
+                "filter": {},
+                "page": 0,
+                "limit": 8,
+            })
+ 
+            this.fetchTasks(this.filter);
+           
         }
 	},
 }

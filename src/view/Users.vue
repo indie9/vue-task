@@ -3,17 +3,15 @@
     <Title >
         Пользователи 
     </Title>	
-    <section class='board'>	
-        <div v-if="!usersLoading">
+    <section class='board' v-if="!usersLoading">	
             <div class="task_list">
                 <div class="userItem" v-for="item in users.data" :key="item.id"  >
                     <router-link :to="{...Profile,params:{id:item.id}}"  class="lnk"> {{userlist[item.id]}} </router-link>
                 </div>
             </div>
-            <Pagination v-model="page"/>
-        </div>
-         <div v-else> loading</div>
+            <Pagination v-model="page"/> 
     </section>
+     <div v-else> loading</div>
 </section>
 </template>
 
@@ -75,5 +73,10 @@ export default {
 }
 .userItem:nth-child(2n){
   background-color: #F2F2F2;
+}
+.task_list{
+  border-radius: 3px;
+  border: solid 1px $inner-shadow;
+  margin-bottom: auto;
 }
 </style>

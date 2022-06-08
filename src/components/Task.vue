@@ -23,7 +23,17 @@
            <Plate :class="taskData.status"> {{Enum[taskData.status]}} </Plate>
           </div>
 
-          <div class="task_inner-item task_priority priority-low" >{{taskData.rank}}</div>
+          <div class="task_inner-item task_priority" :class="taskData.rank" >
+          <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="taskData.rank==medium">
+            <path d="M7 0L0 3L7 6L14 3L7 0Z" fill="#E9B500"/>
+          </svg>
+          <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg" v-else-if="taskData.rank==medium">
+            <path d="M7 0L0 3L7 6L14 3L7 0Z" fill="#E9B000"/>
+          </svg>
+          <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg" v-else>
+            <path d="M7 0L0 3L7 6L14 3L7 0Z" fill="#E9B570"/>
+          </svg>
+          {{Enum[taskData.rank]}}</div>
 
    
           <div class="task_btn"  v-show="!short">
@@ -180,8 +190,17 @@ export default {
       background-repeat: no-repeat;
       background-position-x: 0;
       background-position-y: center;
+      
     }
-
+    .low{
+        color: #3CA961;
+    }
+    .medium{
+        color: #E9B500;
+    }
+    .high{
+        color: #D14343;
+    }
     .task_btn{
       width: 10%;
       display: flex;
@@ -202,6 +221,7 @@ export default {
         color: white;
       }
     }
+
   }
 }
 

@@ -27,7 +27,7 @@
                 <template v-slot:link>
                     <img class="profile_foto" alt="" width="42" height="42" :src="userProfileData.photoUrl"/>
                 </template>
-                <router-link :to="{...Profile,params:{id:userProfileData.id}}"  class="lnk dropdown-content-item"> Посмотреть профиль </router-link>
+                <router-link :to="Profile"  class="lnk dropdown-content-item"> Посмотреть профиль </router-link>
                 <button class='dropdown-content-item' :style="{ color: 'red'}" @click="exit"> Выйти </button>
                 <!-- <router-link :to="TaskEdit"  class="lnk dropdown-content-item"> Редактировать </router-link> -->
             </DropMenu>
@@ -52,6 +52,9 @@ export default {
 			},
             Profile: {
 				name: 'Profile',
+                params:{
+                    id:localStorage.getItem("userId")
+                }
 			}, 
 		}
 	},

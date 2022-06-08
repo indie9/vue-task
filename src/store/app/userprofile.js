@@ -26,25 +26,30 @@ export default {
 	},
 
 	actions: {
-        login: ({ dispatch, commit }, form) => {
+    login: ({ dispatch, commit }, form) => {
 			api.Events.getLogin(form)
                 .then(({data}) => {
+								
                         localStorage.setItem('userId', data.id);
-                        localStorage.setItem('userPass', data.password);	
+                        localStorage.setItem('userPass', form.password);	
                 }).then(() => document.location.href = '/')
 		},
 		getUserData: ({ dispatch, commit }, id) => {
-			
 			api.Events.getUser(id)
                 .then(({data}) => {
-                        commit(mutation.SET_USER_PROFILE, data)	
+                  commit(mutation.SET_USER_PROFILE, data)	
                 })
 		},
 		getCurrentProfile: ({ dispatch, commit }, id) => {
-			
 			api.Events.getUser(id)
                 .then(({data}) => {
                         commit(mutation.SET_CURRENT_PROFILE, data)	
+                })
+		},
+		editUserProfile: ({ dispatch, commit }, form) => {
+			api.Events.editUser(form)
+                .then(({data}) => {
+									commit(mutation.SET_USER_PROFILE, data)
                 })
 		},
 	},

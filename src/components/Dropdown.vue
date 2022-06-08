@@ -7,7 +7,7 @@
           <div class="multiselect-overSelect"></div>
         </div>
         <div class="checkboxes" v-show="isActive" >
-            <Checkbox v-for="item in Object.keys(list)" :key="item" v-model="checkedInputModel" @change="changeCheckBox" :item="item"> {{list[item]}} </Checkbox>
+            <Checkbox v-for="item in Object.keys(list)" :key="item" v-model="checkedInputModel" :item="item"> {{list[item]}} </Checkbox>
         </div>
       </div>
 </template>
@@ -18,51 +18,39 @@
 export default {
     data() {
         return {
-            count: 0,
-            checkedInput: this.chackedInputList,
-			isActive: false,
-        };
+          checkedInput: this.checkedInputList || [],
+					isActive: false,
+				};
     },
-	computed: {
-		checkedInputModel:{
-			get () {
-				return this.checkedInput
-			},
-			set (val) {
-				console.log(val)
-				this.checkedInput = val;
-				this.$emit('change', val)
-			}
-    	} 
-	},
-	model: {
-		prop: 'chackedInputList',
-		event: 'change'
+		computed: {
+			checkedInputModel:{
+				get () {
+					return this.checkedInput
+				},
+				set (val) {
+
+					this.checkedInput = val;
+					this.$emit('change', val)
+				}
+				} 
+		},
+		model: {
+			prop: 'checkedInputList',
+			event: 'change'
   	},
     props: {
-        "list": Object,
-		chackedInputList: Array,
+      "list": Object,
+			checkedInputList: Array,
     },
     watch: {
-        chackedInputList() {
-            this.checkedInput = this.chackedInputList;
+        checkedInputList() {
+            this.checkedInput = this.checkedInputList;
         }
     },
     methods: {
-		check(ev){
-			ev.target.checked 
-			?
-			this.checkedInput.push(ev.target.value)
-			:
-			this.checkedInput = this.checkedInput.filter(item => item != ev.target.value)
-		},
-		show() {
-			
-			this.isActive=!this.isActive;
-		},
-		changeCheckBox(){
-			console.log("hello wtf")
-		}
+			show() {
+				this.isActive=!this.isActive;
+			},	
     },
     
 }
