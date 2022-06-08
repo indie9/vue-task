@@ -27,7 +27,6 @@ export default {
   },
   watch:{
     value(){
-      // console.log(contentModel)
       this.content = this.value
     }
   },

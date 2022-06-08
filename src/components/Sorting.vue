@@ -67,12 +67,13 @@ export default {
         },
         resetForm(e){
             e.preventDefault();
-            this.fetchTasks({
-                "filter": {},
-                "page": 0,
-                "limit": 8,
-            });
-           
+
+            // this.fetchTasks({
+            //     "filter": {},
+            //     "page": 0,
+            //     "limit": 8,
+            // });
+            this.form.rank = ["low","high"]
         }
 	},
 }

@@ -5,7 +5,7 @@
 					type="checkbox"
 					:id="item"
 					:value="item"
-					v-on="$listeners"
+					v-model="content"
             />
         <label :for="item">
             <slot></slot>
@@ -18,16 +18,40 @@
 export default {
 	data() {
 		return {
-			
+			content: this.valueList,
 		}
 	},
+	computed: {
+    	contentModel:{
+			get () {
+				return this.content
+			},
+			set (val) {
+				this.content.push(val);
+				this.$emit('change', val)
+			}
+    	} 
+  	},
+	model: {
+		prop: 'valueList',
+		event: 'change'
+  	},
 	props: {
 		item: String,
+		valueList: Array
 	},
-	model: {
-		
-		event: 'changeDrop'
+	watch:{
+		content(){
+			this.$emit('change', this.content)
+		},
+		valueList(){
+			this.content = this.valueList
+		}	
 	},
+	mounted() {
+		console.log(this.value)
+	},
+	
 }
 </script>
 

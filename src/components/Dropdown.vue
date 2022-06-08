@@ -7,7 +7,7 @@
           <div class="multiselect-overSelect"></div>
         </div>
         <div class="checkboxes" v-show="isActive" >
-            <Checkbox v-for="item in Object.keys(list)" :key="item" @change="check" v-model="checkedInput" :item="item"> {{list[item]}} </Checkbox>
+            <Checkbox v-for="item in Object.keys(list)" :key="item" v-model="checkedInputModel" @change="changeCheckBox" :item="item"> {{list[item]}} </Checkbox>
         </div>
       </div>
 </template>
@@ -19,20 +19,33 @@ export default {
     data() {
         return {
             count: 0,
-            checkedInput: [],
+            checkedInput: this.chackedInputList,
 			isActive: false,
         };
     },
 	computed: {
+		checkedInputModel:{
+			get () {
+				return this.checkedInput
+			},
+			set (val) {
+				console.log(val)
+				this.checkedInput = val;
+				this.$emit('change', val)
+			}
+    	} 
 	},
+	model: {
+		prop: 'chackedInputList',
+		event: 'change'
+  	},
     props: {
         "list": Object,
-        "inner": String,
-		id: String,
+		chackedInputList: Array,
     },
     watch: {
-        checkedInput(val) {
-            this.$emit("input", val);
+        chackedInputList() {
+            this.checkedInput = this.chackedInputList;
         }
     },
     methods: {
@@ -47,6 +60,9 @@ export default {
 			
 			this.isActive=!this.isActive;
 		},
+		changeCheckBox(){
+			console.log("hello wtf")
+		}
     },
     
 }
