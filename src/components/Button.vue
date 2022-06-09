@@ -1,29 +1,25 @@
 <template>
-	<button v-on="$listeners"> 
-    <slot> </slot> 
+  <button v-on="$listeners">
+    <slot> </slot>
   </button>
 </template>
 
 <script>
-
 export default {
-	data() {
-		return {
-			
-		}
-	},
-  
-}
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.btn{
-  width:fit-content;
+.btn {
+  width: fit-content;
   height: 24px;
   border: 1px solid #333333;
   box-sizing: border-box;
   border-radius: 5px;
-  display: block ;
+  display: block;
   text-decoration: none;
   padding: 0 10px;
   margin: 0 5px;
@@ -32,56 +28,54 @@ export default {
   line-height: 24px;
 }
 
-.default{
-  background-color: #F4F4F4;
+.default {
+  background-color: #f4f4f4;
 }
-.default:hover{
-  background-color: #E1E1E1;
+.default:hover {
+  background-color: #e1e1e1;
 }
-.default:active{
-  background-color: #CFCFCF;
+.default:active {
+  background-color: #cfcfcf;
 }
 
-.primary{
-  background-color: #7B61FF;
+.primary {
+  background-color: #7b61ff;
   color: white;
   border: none;
 }
-.primary:hover{
-  background-color: #8A73FF;
+.primary:hover {
+  background-color: #8a73ff;
 }
-.primary:active{
-  background-color: #715BE3;
+.primary:active {
+  background-color: #715be3;
 }
 
-.success{
-  background-color: #5EE48C;
+.success {
+  background-color: #5ee48c;
   color: white;
   border: none;
 }
-.success:hover{
-  background-color: #80F0A6;
+.success:hover {
+  background-color: #80f0a6;
 }
-.success:active{
-  background-color: #4BD379;
+.success:active {
+  background-color: #4bd379;
 }
 
-.error{
-  background-color: #FF6161;
+.error {
+  background-color: #ff6161;
   color: white;
   border: none;
 }
-.error:hover{
-  background-color: #FF8080;
+.error:hover {
+  background-color: #ff8080;
 }
-.error:active{
-  background-color: #D65D5D;
+.error:active {
+  background-color: #d65d5d;
 }
 
-.btn:disabled{
-  background-color: #B5B5B5;
+.btn:disabled {
+  background-color: #b5b5b5;
   color: $label-text;
 }
-
-
 </style>

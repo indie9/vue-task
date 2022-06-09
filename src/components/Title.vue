@@ -1,33 +1,29 @@
-
 <template>
-	<div class="title">
-    <div class="sub-title">		
-			<span class="name"> <slot ></slot> </span>
-      <slot name="subTitle"> </slot>	
-		</div>
-     <div class="buttons">
-        <slot name="buttons"></slot>
-        
-      </div>	
-	</div>
+  <div class="title">
+    <div class="sub-title">
+      <span class="name"> <slot></slot> </span>
+      <slot name="subTitle"> </slot>
+    </div>
+    <div class="buttons">
+      <slot name="buttons"></slot>
+    </div>
+  </div>
 </template>
 
 <script>
-import Button from './Button.vue'
+import Button from "./Button.vue";
 
 export default {
-    data() {
-        return {};
-    },
-    props: {
-       
-    },
-    components: { Button }
-}
+  data() {
+    return {};
+  },
+  props: {},
+  components: { Button },
+};
 </script>
 
 <style lang="scss" scoped>
-.title{
+.title {
   height: 28px;
   margin-bottom: 20px;
   width: 100%;
@@ -36,12 +32,11 @@ export default {
   justify-content: space-between;
   align-items: center;
 
-  & .sub-title{
-
+  & .sub-title {
     display: flex;
     flex-direction: row;
     align-items: center;
-    & .name{
+    & .name {
       font-weight: 300;
       font-size: 24px;
       line-height: 28px;
@@ -50,13 +45,11 @@ export default {
       white-space: nowrap;
       max-width: 600px;
     }
-
   }
-  & .buttons{
+  & .buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 }
-
 </style>

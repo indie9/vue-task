@@ -1,31 +1,23 @@
 <template>
-	<div class='modal_window'>
-          <div class='modal_board'  >
-              <slot></slot>
-          </div>
-        </div>
+  <div class="modal_window">
+    <div class="modal_board">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 
 <script>
-
-
 export default {
-	data() {
-		return {
-            
-		}
-	},
-    props:{
- 
-    },
-    methods: {
-    },
-   
-}
+  data() {
+    return {};
+  },
+  props: {},
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
-.modal_window{
+.modal_window {
   position: absolute;
   top: 0;
   left: 0;
@@ -37,7 +29,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  & .modal_board{
+  & .modal_board {
     margin: auto;
     width: 430px;
     height: 405px;

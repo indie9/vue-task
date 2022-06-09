@@ -1,29 +1,25 @@
 <template>
-	<div class="plate" > 
-        <slot> </slot> 
-    </div>
+  <div class="plate">
+    <slot> </slot>
+  </div>
 </template>
 
 <script>
-
 export default {
-	data() {
-		return {
-			
-		}
-	}
-  
-}
+  data() {
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.plate{
-  width:fit-content;
+.plate {
+  width: fit-content;
   height: 24px;
   border: 1px solid #333333;
   box-sizing: border-box;
   border-radius: 5px;
-  display: block ;
+  display: block;
   text-decoration: none;
   padding: 0 10px;
   margin: 0 5px;
@@ -32,29 +28,26 @@ export default {
   line-height: 24px;
 }
 
-.opened{
-  background-color: #CCCCCC;
+.opened {
+  background-color: #cccccc;
 }
-.inProgress{
-  background-color: #FFC700;
+.inProgress {
+  background-color: #ffc700;
 }
-.testing{
-  background-color: #FFC700;
+.testing {
+  background-color: #ffc700;
 }
 .complete {
-  background-color: #4BD379;
+  background-color: #4bd379;
 }
 
-.low{
-  color: #3CA961;
-  //background-image: url('~@/assets/icons/hightpr.png') format('png');
+.low {
+  color: #3ca961;
 }
-.medium{
-  color: #E9B500;
-} 
-.high{
-  color: #D14343;
- 
+.medium {
+  color: #e9b500;
 }
-
+.high {
+  color: #d14343;
+}
 </style>

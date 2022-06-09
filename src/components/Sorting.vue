@@ -1,88 +1,93 @@
 <template>
-<form class="sorting_list" @submit="submitForm" @reset="resetForm" >
+  <form class="sorting_list" @submit="submitForm" @reset="resetForm">
+    <div class="sorting_item sort-type">
+      <Dropdown :list="typeList" v-model="form.type" placeholder="Тип" />
+    </div>
 
-            <div class="sorting_item sort-type">
-               <Dropdown  :list="typeList" v-model="form.type" placeholder="Тип"/>
-            </div>
+    <Input
+      type="text"
+      placeholder="Задача"
+      class="sorting_item sort-name"
+      v-model="form.query"
+    />
 
-            <Input
-              type = "text"
-              placeholder = "Задача"
-              class = "sorting_item sort-name"
-              v-model="form.query"
-            />
+    <div class="sorting_item sort-autor">
+      <Dropdown
+        :list="userlist"
+        v-model="form.assignedUsers"
+        placeholder="Пользователи"
+      />
+    </div>
 
-            <div class="sorting_item sort-autor">
-              <Dropdown :list="userlist" v-model="form.assignedUsers" placeholder="Пользователи"/> 
-            </div>
+    <div class="sorting_item sort-status">
+      <Dropdown :list="statusList" v-model="form.status" placeholder="Статус" />
+    </div>
 
-            <div class="sorting_item sort-status">
-              <Dropdown :list="statusList" v-model="form.status" placeholder="Статус"/>
-            </div>
+    <div class="sorting_item sort-priority">
+      <Dropdown :list="rankList" v-model="form.rank" placeholder="Приоритет" />
+    </div>
 
-              <div class="sorting_item sort-priority">
-              <Dropdown :list="rankList" v-model="form.rank" placeholder="Приоритет"/>
-              </div>
-
-            <Button class="btn primary sort-btn"  type="submit"> Применить </Button>
-            <Button class="btn error sort-btn-rest"  type="reset"> &#8635; </Button>
-          </form>
+    <Button class="btn primary sort-btn" type="submit"> Применить </Button>
+    <Button class="btn error sort-btn-rest" type="reset"> &#8635; </Button>
+  </form>
 </template>
 
 <script>
-import { mapGetters,mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
-	data() {
-		return {
-            typeList: {task: "Задача",bug: "Ошибка"},
-            rankList: {low: "Низкий",medium: "Средний",high: "Высокий"},
-            statusList:{opened: "Открыто",inProgress: "В работе",testing: "Тестиоваие",complete: "Сделано"},
-            form:{
-                type:[],
-                query: "" , 
-                assignedUsers:[],
-                status:[],
-                rank:[]
-            }
-		}
-	},
+  data() {
+    return {
+      typeList: { task: "Задача", bug: "Ошибка" },
+      rankList: { low: "Низкий", medium: "Средний", high: "Высокий" },
+      statusList: {
+        opened: "Открыто",
+        inProgress: "В работе",
+        testing: "Тестиоваие",
+        complete: "Сделано",
+      },
+      form: {
+        type: [],
+        query: "",
+        assignedUsers: [],
+        status: [],
+        rank: [],
+      },
+    };
+  },
 
-	
-	computed: {
-	    ...mapGetters("users", ["users", "userlist"]),
-		  ...mapGetters("tasks", [ "filter"]),
-	},
-	mounted() {
-    
-		this.form =  {...this.form,...this.filter.filter};
-	},
-	methods: {
-        ...mapActions("tasks", ["setLoading", "fetchTasks","setFilter"]),
-        submitForm(e){
-            e.preventDefault();
-            this.setFilter({
-                "filter": this.form,
-                "page": 0,
-                "limit": 8,
-            })
-        },
-        resetForm(e){
-            e.preventDefault();
-            this.setFilter({
-                "filter": {},
-                "page": 0,
-                "limit": 8,
-            })
- 
-            this.fetchTasks(this.filter);
-           
-        }
-	},
-}
+  computed: {
+    ...mapGetters("users", ["users", "userlist"]),
+    ...mapGetters("tasks", ["filter"]),
+  },
+  mounted() {
+    this.form = { ...this.form, ...this.filter.filter };
+  },
+  methods: {
+    ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
+    submitForm(e) {
+      e.preventDefault();
+      this.setFilter({
+        filter: this.form,
+        page: 0,
+        limit: 8,
+      });
+    },
+    resetForm(e) {
+      e.preventDefault();
+      this.setFilter({
+        filter: {},
+        page: 0,
+        limit: 8,
+      });
+
+      this.fetchTasks(this.filter);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .sorting_list{
+.sorting_list {
   width: 100%;
   margin-bottom: 20px;
   height: 25px;
@@ -90,10 +95,10 @@ export default {
   flex-direction: row;
   margin: 0 -7px 20px -7px;
 
-  & .sorting_item{
+  & .sorting_item {
     margin: 0 7px;
     height: 100%;
-    border-color: #CFCFCF;
+    border-color: #cfcfcf;
     border-radius: 3px;
     width: 100%;
     color: var(--label-text);
@@ -101,16 +106,15 @@ export default {
     position: relative;
   }
 
-
-  & .sort-type{
+  & .sort-type {
     width: 8%;
   }
 
-  & .sort-name{
+  & .sort-name {
     width: 47%;
     padding-left: 5px;
     margin: 2px 0;
-    box-shadow: inset 0px 0px 2px 1px #B5B5B5;
+    box-shadow: inset 0px 0px 2px 1px #b5b5b5;
     border-radius: 3px;
     height: 24px;
     color: var(--teaxt-color);
@@ -119,31 +123,27 @@ export default {
     color: var(--label-text);
   }
 
-  & .sort-name:hover{
-    border: 1px solid #7B61FF;
+  & .sort-name:hover {
+    border: 1px solid #7b61ff;
   }
-  & .sort-name:focus{
+  & .sort-name:focus {
     box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
   }
 
-  & .sort-autor{
+  & .sort-autor {
     width: 15%;
-
   }
-  & .sort-status{
+  & .sort-status {
     width: 10%;
-
   }
-  & .sort-priority{
+  & .sort-priority {
     width: 10%;
-
   }
-  & .sort-btn{
-      width: 7%;
+  & .sort-btn {
+    width: 7%;
   }
-  & .sort-btn-rest{
+  & .sort-btn-rest {
     width: 2%;
   }
 }
-
 </style>

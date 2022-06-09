@@ -1,66 +1,92 @@
 <template>
-	<div class="multiselect" :class="{'active-checkbox': isActive}" v-click-outside="hide">
-        <div class="multiselect-selectBox" @click="show" >
-          <select :class="{'multiselec-active': isActive,'activeSelect': checkedInput.length}" >
-			<option disabled selected v-if="!checkedInput.length"> {{placeholder}}</option>
-            <option disabled selected v-else-if="checkedInput.length == Object.keys(list).length"> Выбраны все</option>
-			<option disabled selected v-else> Выбрано: {{checkedInput.length}}</option>
-          </select> 
-          <div class="multiselect-overSelect"></div>
-        </div>
-        <div class="checkboxes" v-show="isActive" >
-            <Checkbox v-for="item in Object.keys(list)" :key="`${item}-key`" v-model="checkedInputModel" :item="item"> {{list[item]}} </Checkbox>
-        </div>
-      </div>
+  <div
+    class="multiselect"
+    :class="{ 'active-checkbox': isActive }"
+    v-click-outside="hide"
+  >
+    <div class="multiselect-selectBox" @click="show">
+      <select
+        :class="{
+          'multiselec-active': isActive,
+          activeSelect: checkedInput.length,
+        }"
+      >
+        <option disabled selected v-if="!checkedInput.length">
+          {{ placeholder }}
+        </option>
+        <option
+          disabled
+          selected
+          v-else-if="checkedInput.length == Object.keys(list).length"
+        >
+          Выбраны все
+        </option>
+        <option disabled selected v-else>
+          Выбрано: {{ checkedInput.length }}
+        </option>
+      </select>
+      <div class="multiselect-overSelect"></div>
+    </div>
+    <div class="checkboxes" v-show="isActive">
+      <Checkbox
+        v-for="item in Object.keys(list)"
+        :key="`${item}-key`"
+        v-model="checkedInputModel"
+        :item="item"
+      >
+        {{ list[item] }}
+      </Checkbox>
+    </div>
+  </div>
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside'
+import ClickOutside from "vue-click-outside";
 
 export default {
-   data() {
-      return {
-         checkedInput: this.checkedInputList,
-         isActive: false,
-      };
-   },
-   computed: {
-      checkedInputModel: {
-         get() {
-            return this.checkedInput
-         },
-         set(val) {
-            this.checkedInput = val;
-            this.$emit('change', val)
-         }
-      }
-   },
-   model: {
-      prop: 'checkedInputList',
-      event: 'change'
-   },
-   props: {
-      "list": Object,
-      checkedInputList: Array,
-      placeholder: String,
-   },
-   watch: {
-      checkedInputList() {
-         this.checkedInput = this.checkedInputList;
-      }
-   },
-   methods: {
-      show() {
-         this.isActive = !this.isActive;
+  data() {
+    return {
+      checkedInput: this.checkedInputList,
+      isActive: false,
+    };
+  },
+  computed: {
+    checkedInputModel: {
+      get() {
+        return this.checkedInput;
       },
-      hide() {
-         this.isActive = false;
+      set(val) {
+        this.checkedInput = val;
+        this.$emit("change", val);
       },
-   },
-   directives: {
-      ClickOutside
-   }
-}
+    },
+  },
+  model: {
+    prop: "checkedInputList",
+    event: "change",
+  },
+  props: {
+    list: Object,
+    checkedInputList: Array,
+    placeholder: String,
+  },
+  watch: {
+    checkedInputList() {
+      this.checkedInput = this.checkedInputList;
+    },
+  },
+  methods: {
+    show() {
+      this.isActive = !this.isActive;
+    },
+    hide() {
+      this.isActive = false;
+    },
+  },
+  directives: {
+    ClickOutside,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -80,9 +106,9 @@ export default {
     width: 98%;
     margin: auto;
     height: 24px;
-    box-shadow: inset 0px 0px 2px 1px #B5B5B5;
+    box-shadow: inset 0px 0px 2px 1px #b5b5b5;
     border-radius: 3px;
-    color: #CCCCCC;
+    color: #cccccc;
   }
 
   &-overSelect {
@@ -116,11 +142,11 @@ export default {
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
-    background: #FFFFFF;
+    background: #ffffff;
     border: 1px solid $text-color;
     border-radius: 5px;
     padding-left: 5px;
-    color: #FFFFFF;
+    color: #ffffff;
     box-sizing: border-box;
     padding-bottom: 0;
   }
@@ -159,15 +185,15 @@ export default {
 }
 
 .custom-checkbox:checked + label::before {
-  background: #7B61FF;
+  background: #7b61ff;
 }
 
 .custom-checkbox + label:hover {
-  background-color: #E6E1FF;
+  background-color: #e6e1ff;
 }
 
 .custom-checkbox + label:active {
-  background-color: #7B61FF;
+  background-color: #7b61ff;
   color: white;
 }
 
