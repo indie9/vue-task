@@ -28,14 +28,7 @@ module.exports = {
 		assetsSubDirectory: '',
 		assetsPublicPath: '/',
 		require: {
-			modules: {
-				rules: [
-					{
-					 test: /\.svg$/,
-					 loader: 'vue-svg-loader', // `vue-svg` for webpack 1.x
-					},
-				  ],
-				},
+			modules: [],
 			args: [],
 		},
 
