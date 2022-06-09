@@ -11,7 +11,7 @@ module.exports = {
 		assetsPublicPath: '/',
 		proxyTable: {
 			['/api']: {
-				target: 'http://93.95.97.34',
+				target: 'https://fe-school-api.herokuapp.com',
 				pathRewrite: {
 					['^/api']: ['/api']
 				},

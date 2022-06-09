@@ -1,8 +1,7 @@
 @font-face {
-    // font-family: 'Roboto';
-    // src: url('Roboto-Regular.eot');
-    // src: local('Roboto'), local('Roboto-Regular'),
-    //     url('~@/assets/fonts/Roboto-Regular.woff') format('woff');
-    // font-weight: normal;
-    // font-style: normal;
+    font-family: 'Roboto';
+    src: local('Roboto'), local('Roboto-Regular'),
+        url('~@/assets/fonts/Roboto-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }

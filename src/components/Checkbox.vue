@@ -1,14 +1,13 @@
 <template>
 	<div class="checkbox" >
         <input
-					class="custom-checkbox"
-					type="checkbox"
-					:id="`${item}-checkbox`"
-					:value="item"
-					v-model="content"
-					@change="sayHi"		
-            />
-        <label :for="`${item}-checkbox`" @click="sayHi">
+			class="custom-checkbox"
+			type="checkbox"
+			:id="`${item}-checkbox`"
+			:value="item"
+			v-model="content"	
+        />
+        <label :for="`${item}-checkbox`" >
             <slot></slot>
         </label>
     </div>    
@@ -41,12 +40,6 @@ export default {
 	mounted() {
 	
 	},
-	methods: {
-		sayHi(e){
-			console.log('hello mthfck',e.target)
-			//this.content.push(this.item)
-		}
-	}
 	
 }
 </script>

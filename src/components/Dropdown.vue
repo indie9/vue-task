@@ -18,184 +18,182 @@
 import ClickOutside from 'vue-click-outside'
 
 export default {
-    data() {
-        return {
-          	checkedInput: this.checkedInputList ,
-			isActive: false,
-		};
-    },
-		computed: {
-			checkedInputModel:{
-				get () {
-					return this.checkedInput
-				},
-				set (val) {
-
-					this.checkedInput = val;
-					this.$emit('change', val)
-				}
-				} 
-		},
-		model: {
-			prop: 'checkedInputList',
-			event: 'change'
-  	},
-    props: {
-      	"list": Object,
-		checkedInputList: Array,
-		placeholder: String,
-    },
-    watch: {
-        checkedInputList() {
-            this.checkedInput = this.checkedInputList;
-        }
-    },
-    methods: {
-			show() {
-				this.isActive=!this.isActive;
-			},
-			hide() {
-				this.isActive=false;
-			},	
-    },
-    directives: {
-    	ClickOutside
-  	}
+   data() {
+      return {
+         checkedInput: this.checkedInputList,
+         isActive: false,
+      };
+   },
+   computed: {
+      checkedInputModel: {
+         get() {
+            return this.checkedInput
+         },
+         set(val) {
+            this.checkedInput = val;
+            this.$emit('change', val)
+         }
+      }
+   },
+   model: {
+      prop: 'checkedInputList',
+      event: 'change'
+   },
+   props: {
+      "list": Object,
+      checkedInputList: Array,
+      placeholder: String,
+   },
+   watch: {
+      checkedInputList() {
+         this.checkedInput = this.checkedInputList;
+      }
+   },
+   methods: {
+      show() {
+         this.isActive = !this.isActive;
+      },
+      hide() {
+         this.isActive = false;
+      },
+   },
+   directives: {
+      ClickOutside
+   }
 }
 </script>
 
 <style lang="scss" scoped>
-	
 .multiselect {
-	width: 100%;
-	overflow: hidden;
-	padding: 2px 0;
-	box-sizing: content-box;
-	background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+  padding: 2px 0;
+  box-sizing: content-box;
+  background-color: #fff;
 
-	&-selectBox {
-		position: relative;
-	}
+  &-selectBox {
+    position: relative;
+  }
 
-	&-selectBox select {
-		display: block;
-		width: 98%;
-		margin: auto;
-		height: 24px;
-		box-shadow: inset 0px 0px 2px 1px #B5B5B5;
-		border-radius: 3px;
-		color: #CCCCCC
-	}
+  &-selectBox select {
+    display: block;
+    width: 98%;
+    margin: auto;
+    height: 24px;
+    box-shadow: inset 0px 0px 2px 1px #B5B5B5;
+    border-radius: 3px;
+    color: #CCCCCC;
+  }
 
-	&-overSelect {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-	}
-	& .activeSelect{
-		color: $text-color;
-		font-weight: 700;
-	}
-	}
-	.checkboxes {
+  &-overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 
-		display: flex;
-		flex-direction: column;
-		background-color: white;
-		width: 98%;
-		margin: auto;
-		padding: 5px;
-		
-	label::before {
-		content: 'X';
-		display: inline-block;
-		margin-right: 0.5em;
-		width: 24px;
-		height: 24px;
-		font-size: 16px;
-		line-height: 24px;
-		font-weight: 700;
-		background: #FFFFFF;
-		border: 1px solid $text-color;
-		border-radius: 5px;
-		padding-left: 5px;
-		color: #FFFFFF;
-		box-sizing: border-box;
-		padding-bottom: 0;
+  & .activeSelect {
+    color: $text-color;
+    font-weight: 700;
+  }
+}
 
-	}
-	}
-	.checkbox{
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: flex-end;
-	align-items: center;
-	height: 24px;
-	margin: 2px 0 2px 0;
-	border: 1x solid $primary;
-	}
-	.custom-checkbox{
-	position: absolute;
-	z-index: -1;
-	opacity: 0;
-	line-height: 24px;
-	margin: 0;
-	padding: 0;
-	}
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 98%;
+  margin: auto;
+  padding: 5px;
 
-	.custom-checkbox+label {
-	display: block;
-	align-items: center;
-	user-select: none;
-	width: 100%;
-	color: $text-color;
-	font-size: 14px;
-	margin: 0;
-	padding: 0;
-	line-height: 24px;
-	white-space: nowrap;
-	}
+  label::before {
+    content: "X";
+    display: inline-block;
+    margin-right: 0.5em;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    background: #FFFFFF;
+    border: 1px solid $text-color;
+    border-radius: 5px;
+    padding-left: 5px;
+    color: #FFFFFF;
+    box-sizing: border-box;
+    padding-bottom: 0;
+  }
+}
 
-	.custom-checkbox:checked+label::before {
-		background: #7B61FF;
-	}
+.checkbox {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  height: 24px;
+  margin: 2px 0 2px 0;
+  border: 1x solid $primary;
+}
 
-	.custom-checkbox+label:hover {
-	background-color: #E6E1FF;
+.custom-checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  line-height: 24px;
+  margin: 0;
+  padding: 0;
+}
 
-	}
-	.custom-checkbox+label:active {
+.custom-checkbox + label {
+  display: block;
+  align-items: center;
+  user-select: none;
+  width: 100%;
+  color: $text-color;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
 
-	background-color: #7B61FF;
-	color: white;
-	}
+.custom-checkbox:checked + label::before {
+  background: #7B61FF;
+}
 
+.custom-checkbox + label:hover {
+  background-color: #E6E1FF;
+}
 
+.custom-checkbox + label:active {
+  background-color: #7B61FF;
+  color: white;
+}
 
-	.active-checkbox{
+.active-checkbox {
+  border: 1px solid $primary;
+  box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+  border-radius: 3px;
+}
 
-	border: 1px solid $primary;
-	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
-	border-radius: 3px;
-	}
-	.multiselect:hover {
-	border: 1px solid $primary;
-	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
-	border-radius: 3px;
-	}
-	.multiselect:hover > .multiselect-selectBox select{
-	border: 1px solid $primary;
-	border-radius: 3px;
-	color: $text-color;
-	font-weight: 400;
-	}
-	.multiselec-active{
-		border: 1px solid $primary;
-		border-radius: 3px;
-		color: $text-color;
-		font-weight: 400;
-	}
+.multiselect:hover {
+  border: 1px solid $primary;
+  box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+  border-radius: 3px;
+}
 
+.multiselect:hover > .multiselect-selectBox select {
+  border: 1px solid $primary;
+  border-radius: 3px;
+  color: $text-color;
+  font-weight: 400;
+}
+
+.multiselec-active {
+  border: 1px solid $primary;
+  border-radius: 3px;
+  color: $text-color;
+  font-weight: 400;
+}
 </style>
