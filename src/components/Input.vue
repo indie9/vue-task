@@ -40,6 +40,7 @@ export default {
     box-shadow: inset 0px 0px 2px 1px #B5B5B5;
     border-radius: 3px;
     height: 24px;
+    min-height: 24px;
     color: $text-color;
   }
   input::placeholder {

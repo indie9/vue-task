@@ -1,9 +1,9 @@
 <template>
-    <div class="dropdown" >
+    <div class="dropdown" v-click-outside="hide">
       <div @click="drop" >
         <slot name="link"></slot>
       </div>
-      <div class="dropdown-content" v-show="isActive"  >
+      <div class="dropdown-content" v-show="isActive" @click="hide" >
         <slot></slot>
       </div>
     </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
 
 export default {
 	data() {
@@ -23,11 +24,17 @@ export default {
       
 		}
 	},
-    methods: {
-        drop(){
-            this.isActive = !this.isActive;
-        }
-    }
+  methods: {
+      drop(){
+        this.isActive = !this.isActive;
+      },
+      hide() {
+				this.isActive=false;
+			},
+  },
+  directives: {
+    ClickOutside
+  }
 	
 }
 </script>

@@ -9,7 +9,7 @@
                     <router-link :to="{...Profile,params:{id:item.id}}"  class="lnk"> {{userlist[item.id]}} </router-link>
                 </div>
             </div>
-            <Pagination v-model="page"/> 
+            <Pagination v-model="page" :total="users.total"/> 
     </section>
      <div v-else> loading</div>
 </section>

@@ -7,13 +7,13 @@
               <Plate :class="currentTask.status" > {{currentTask.status}} </Plate>
             </template>
             <template v-slot:buttons>
-                <router-link :to="TaskEdit"  class="lnk dropdown-content-item">
-                 <Button class="btn primary"> Редактировать </Button>
-                </router-link>
-                <Button class="btn default" @click="status('opened')" v-show="currentTask.status !== 'opened'"> Переоткрыть </Button>
+              <Button class="btn default" @click="status('opened')" v-show="currentTask.status !== 'opened'"> Переоткрыть </Button>
                 <Button class="btn default" @click="status('inProgress')" v-show="currentTask.status === 'opened'"> Взять в работу</Button>
                 <Button class="btn default" @click="status('complete')" v-show="currentTask.status !== 'complete'"> Готово </Button>
                 <Button class="btn default" @click="status('testing')" v-show="currentTask.status === 'inProgress'"> На тестирование</Button>             
+                <router-link :to="TaskEdit"  class="lnk dropdown-content-item">
+                 <Button class="btn primary"> Редактировать </Button>
+                </router-link>
                 <Button class="btn error" @click="deleteTask" > Удалить </Button>
             </template>
         </Title>		
@@ -42,7 +42,7 @@
 
                 <p class='taskPage-title'>Затрачено времени</p>
 
-                <p>
+                <p v-if="currentTask.timeInMinutes">
                 {{
                   Math.floor((currentTask.timeInMinutes/1440))
                   ? 
@@ -65,7 +65,7 @@
                   ""
                 }}
                 </p>
-
+                <p v-else>{{"Никто не приступал к работе"}}</p>
                 <Button class='btn primary' @click="modalVisable">Сделать запись о работе</Button>
 
             </div>
@@ -76,7 +76,7 @@
             </div>
 
             <form class="taskPage-comments" >
-                <p class='taskPage-title'>Коментарии </p>
+                <p class='taskPage-title'>Коментарии ({{comments.length}})</p>
                 <Textarea
                   class='taskPage-textArea'
                   placeholder="Текст комментария"
@@ -294,7 +294,8 @@ export default {
     border-right: #B5B5B5 solid 2px;
     border-left: #B5B5B5 solid 2px;
     &-text{
-    overflow-y: auto;
+      height: 100%;
+      overflow-y: auto;
     }
   }
   &-comments{

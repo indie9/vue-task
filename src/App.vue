@@ -1,6 +1,6 @@
 <template>
 			<div id="root">
-					<Header />
+					<Header :loginMode="!loginFlag"/>
 					<section class="main__wrapper" v-if="!loginFlag">	
 						<form @submit="loginSend" class="login_window" >
 							<p>Авторизация</p>
@@ -55,6 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/fonts';
 	.main__wrapper{
 		width: 100%;
 		height: 93vh;

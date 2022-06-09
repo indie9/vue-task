@@ -4,8 +4,8 @@
         <Title >
             {{currentProfile.username}} 
             <template v-slot:buttons> 
-                <Button class="btn default" v-show="show"  @click="modalVisable"> Редактировать </Button>
-               <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить задачу</Button> </router-link>
+                <router-link :to="TaskEdit" > <Button class="btn default"> Добавить задачу</Button> </router-link>
+                <Button class="btn primary" v-show="show"  @click="modalVisable"> Редактировать </Button>
             </template>
         </Title>		
         <section class='board'>					
@@ -31,7 +31,7 @@
                     <div class="task_list" v-else>
                         Пользователь свободен от задач, накидайте-ка ему что-нибдуь
                     </div>
-                    <Pagination v-model="page" v-show="tasks.data[0]" />
+                    <Pagination v-model="page" v-show="tasks.data[0]" :total="tasks.total"/>
                 </article>
             </section>
         </section>

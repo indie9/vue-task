@@ -1,7 +1,7 @@
 <template>
 	<div class="selectMultiselect" :class="{'active-checkbox': isActive}">
         <div class="selectMultiselect-selectBox" @click="show" v-click-outside="hide">
-          <select>
+          <select :class="{'activeSelect': selectedInput}">
             <option disabled selected>{{selectedInput ? list[selectedInput] : placeholder }}</option>
           </select>
           <div class="selectMultiselect-overSelect"></div>
@@ -12,12 +12,12 @@
                   class="custom-checkbox"
                   type="radio"
                   :name="placeholder"
-                  :id="item"
-									:value="item" 
-									v-model="selectedInputModel"
+                  :id="`${item}-checkbox`"
+					:value="item" 
+					v-model="selectedInputModel"
 								
                 />
-                <label :for="item" :name="placeholder" >
+                <label :for="`${item}-checkbox`" :name="placeholder" >
                  {{list[item]}}
                 </label>
             </div>    
@@ -57,7 +57,7 @@ export default {
 		selectedInputItem: String,
 	},
  	mounted() {
-    	// this.selectedInput = this.checked
+    	
   	},
 	watch:{
 		selectedInputItem(){
@@ -83,7 +83,7 @@ export default {
 
 .selectMultiselect {
 	width: 100%;
-	//overflow: hidden;
+	overflow: hidden;
 	padding: 2px 0;
 	box-sizing: content-box;
 	background-color: #fff;
@@ -102,13 +102,17 @@ export default {
 		border-radius: 3px;
 		color: #CCCCCC
 	}
-
+	& .activeSelect{
+		color: $text-color;
+		font-weight: 700;
+	}
 	&-overSelect {
 		position: absolute;
 		left: 0;
 		right: 0;
 		top: 0;
 		bottom: 0;
+		z-index: 1;
 	}
 	}
 	.selectCheckboxes {
@@ -117,7 +121,7 @@ export default {
 		background-color: white;
 		width: 100%;
 		height: 100%;
-	 	z-index: 99;
+	 	z-index: 999;
 		
 	}
 	.checkbox{
@@ -139,11 +143,11 @@ export default {
 	padding: 0;
 	}
 .custom-checkbox+label{
-		background-color: white;
+	background-color: white;
     width:100%;
     line-height: 24px;
     padding-left: 10px;
-    z-index: 99;
+    z-index: 1;
 }
 	
 
@@ -166,10 +170,10 @@ export default {
 
 
 	.active-checkbox{
-
-	border: 1px solid $primary;
-	box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
-	border-radius: 3px;
+		border: 1px solid $primary;
+		box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+		border-radius: 3px;
+		z-index: 99;
 	}
 	.selectMultiselect:hover {
 	border: 1px solid $primary;

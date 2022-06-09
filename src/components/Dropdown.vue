@@ -1,26 +1,28 @@
 <template>
-	<div class="multiselect" :class="{'active-checkbox': isActive}">
-        <div class="multiselect-selectBox" @click="show">
-          <select :class="{'multiselec-active': isActive}">
-            <option disabled selected> Выбрано: {{checkedInput.length}}</option>
+	<div class="multiselect" :class="{'active-checkbox': isActive}" v-click-outside="hide">
+        <div class="multiselect-selectBox" @click="show" >
+          <select :class="{'multiselec-active': isActive,'activeSelect': checkedInput.length}" >
+			<option disabled selected v-if="!checkedInput.length"> {{placeholder}}</option>
+            <option disabled selected v-else-if="checkedInput.length == Object.keys(list).length"> Выбраны все</option>
+			<option disabled selected v-else> Выбрано: {{checkedInput.length}}</option>
           </select> 
           <div class="multiselect-overSelect"></div>
         </div>
         <div class="checkboxes" v-show="isActive" >
-            <Checkbox v-for="item in Object.keys(list)" :key="item" v-model="checkedInputModel" :item="item"> {{list[item]}} </Checkbox>
+            <Checkbox v-for="item in Object.keys(list)" :key="`${item}-key`" v-model="checkedInputModel" :item="item"> {{list[item]}} </Checkbox>
         </div>
       </div>
 </template>
 
 <script>
-
+import ClickOutside from 'vue-click-outside'
 
 export default {
     data() {
         return {
-          checkedInput: this.checkedInputList || [],
-					isActive: false,
-				};
+          	checkedInput: this.checkedInputList ,
+			isActive: false,
+		};
     },
 		computed: {
 			checkedInputModel:{
@@ -39,8 +41,9 @@ export default {
 			event: 'change'
   	},
     props: {
-      "list": Object,
-			checkedInputList: Array,
+      	"list": Object,
+		checkedInputList: Array,
+		placeholder: String,
     },
     watch: {
         checkedInputList() {
@@ -50,9 +53,14 @@ export default {
     methods: {
 			show() {
 				this.isActive=!this.isActive;
+			},
+			hide() {
+				this.isActive=false;
 			},	
     },
-    
+    directives: {
+    	ClickOutside
+  	}
 }
 </script>
 
@@ -85,6 +93,10 @@ export default {
 		right: 0;
 		top: 0;
 		bottom: 0;
+	}
+	& .activeSelect{
+		color: $text-color;
+		font-weight: 700;
 	}
 	}
 	.checkboxes {

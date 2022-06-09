@@ -214,6 +214,7 @@ export default {
         height: 20px;
         border-radius: 3px;
         text-align: center;
+        padding: 3px;
       }
        .dropdown-btn:hover,
        .dropdown-active{

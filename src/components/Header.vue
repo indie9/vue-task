@@ -15,12 +15,12 @@
           </a>
 
         
-         <div class="header_wrap-group-lnk">
-            <router-link :to="Tasks"  class="lnk"> Задачи </router-link>
-			<router-link :to="Users"  class="lnk"> Пользователи </router-link>
+         <div class="header_wrap-group-lnk" v-show="!loginMode">
+            <router-link :to="Tasks"  class="lnk" active-class="lnk-active" > Задачи </router-link>
+			<router-link :to="Users"  class="lnk" active-class="lnk-active"> Пользователи </router-link>
           </div>
  
-          <div class="header_wrap-profile">
+          <div class="header_wrap-profile" v-show="!loginMode">
 
             <span class="username">{{userProfileData.username}}</span>
             <DropMenu >
@@ -59,7 +59,12 @@ export default {
 		}
 	},
 
-	
+	props:{
+        loginMode:{
+          type: Boolean,
+          default: false
+        },
+    },
 	computed: {
         ...mapGetters("userprofile", ["userProfileData"]),
 		text() {
@@ -178,4 +183,5 @@ export default {
         }
     }
 }
+
 </style>

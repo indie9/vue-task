@@ -2,7 +2,7 @@
 <form class="sorting_list" @submit="submitForm" @reset="resetForm" >
 
             <div class="sorting_item sort-type">
-               <Dropdown  :list="typeList" v-model="form.type"/>
+               <Dropdown  :list="typeList" v-model="form.type" placeholder="Тип"/>
             </div>
 
             <Input
@@ -13,16 +13,16 @@
             />
 
             <div class="sorting_item sort-autor">
-            <Dropdown :list="userlist" v-model="form.assignedUsers"/> 
+              <Dropdown :list="userlist" v-model="form.assignedUsers" placeholder="Пользователи"/> 
             </div>
 
             <div class="sorting_item sort-status">
-            <Dropdown :list="statusList" v-model="form.status"/>
+              <Dropdown :list="statusList" v-model="form.status" placeholder="Статус"/>
             </div>
 
-            <div class="sorting_item sort-priority">
-            <Dropdown :list="rankList" v-model="form.rank"/>
-            </div>
+              <div class="sorting_item sort-priority">
+              <Dropdown :list="rankList" v-model="form.rank" placeholder="Приоритет"/>
+              </div>
 
             <Button class="btn primary sort-btn"  type="submit"> Применить </Button>
             <Button class="btn error sort-btn-rest"  type="reset"> &#8635; </Button>

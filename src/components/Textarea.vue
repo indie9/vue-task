@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
   textarea{
     
-    padding-left: 5px;
+    padding: 5px ;
     margin: 2px 0;
     box-shadow: inset 0px 0px 2px 1px #B5B5B5;
     border-radius: 3px;

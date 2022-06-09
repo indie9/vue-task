@@ -6,7 +6,7 @@
             
             
             <template v-slot:buttons>
-                    <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить</Button> </router-link>
+                    <router-link :to="TaskEdit" > <Button class="btn primary"> Добавить задачу</Button> </router-link>
             </template>
         </Title>	
 
@@ -16,11 +16,13 @@
 
         <section class='board' v-else>	     
             <Sorting />
-            <div class="task_list">
+            <div class="task_list" v-if="tasks.data[0]">
                  <Task v-for="task in tasks.data" :key="task.id" :taskData="task"/>
             </div>
-           
-            <Pagination v-model="page"/>
+            <div v-else>
+                Ничего не найдено..(
+            </div>
+            <Pagination v-model="page" :total="tasks.total"/>
         </section>
 
     </section>
@@ -28,7 +30,7 @@
 
 <script>
 import { mapGetters,mapActions } from 'vuex';
-import Plate from '../components/Plate.vue';
+
 
 
 
@@ -72,7 +74,7 @@ export default {
         ...mapActions("tasks", ["setLoading", "fetchTasks", "setFilter"]),
         ...mapActions("users", ["fetchUsers"]),
     },
-    components: { Plate }
+  
 }
 </script>
 

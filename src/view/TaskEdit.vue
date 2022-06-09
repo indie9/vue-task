@@ -50,12 +50,12 @@
                     required
                   />
                   <label htmlFor="description" class='taskPage-title'>Задача</label>
-                  <textarea
+                  <Textarea
                     name="description"
                     placeholder="Описание"
                     v-model="taskForm.description"
                     required
-                  > </textarea>
+                  > </Textarea>
 
             </div>
             <div class="board__form-comments"></div>
@@ -96,6 +96,7 @@ export default {
         ...mapActions("tasks", ["setLoading", "fetchTasks", "getTask"]),
         ...mapActions("users", ["fetchUsers"]),
         addTask(){
+          console.log(this.taskForm)
           	api.Events.addTask(this.taskForm)
             .then(() => this.$router.push({ name: 'Tasks'}))
         },
@@ -124,34 +125,6 @@ export default {
     display: flex;
     flex-direction: row;
     height: 100%;
-    & select{
-      padding: 2px;
-      height: 24px;
-      border: 1px solid #7B61FF;
-      box-sizing: border-box;
-      box-shadow: inset 0px 0px 2px 1px #B5B5B5;
-      border-radius: 3px;
-      margin: 5px 0 20px 0;
-    }
-
-    & input{
-      height: 24px;
-      border: 1px solid #7B61FF;
-      box-sizing: border-box;
-      box-shadow: inset 0px 0px 2px 1px #B5B5B5;
-      border-radius: 3px;
-      padding: 5px;
-      margin: 5px 0 20px 0;
-    }
-    & textarea{
-      height: 100%;
-      border: 1px solid #7B61FF;
-      box-sizing: border-box;
-      box-shadow: inset 0px 0px 2px 1px #B5B5B5;
-      border-radius: 3px;
-      padding: 5px;
-      margin: 5px 0 0 0;
-    }
 
     &-data{
       width: 26%;

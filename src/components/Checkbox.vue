@@ -3,11 +3,12 @@
         <input
 					class="custom-checkbox"
 					type="checkbox"
-					:id="item"
+					:id="`${item}-checkbox`"
 					:value="item"
 					v-model="content"
+					@change="sayHi"		
             />
-        <label :for="item">
+        <label :for="`${item}-checkbox`" @click="sayHi">
             <slot></slot>
         </label>
     </div>    
@@ -21,17 +22,6 @@ export default {
 			content: this.valueList,
 		}
 	},
-	computed: {
-    	contentModel:{
-			get () {
-				return this.content
-			},
-			set (val) {
-				this.content.push(val);
-				this.$emit('change', val)
-			}
-    	} 
-  	},
 	model: {
 		prop: 'valueList',
 		event: 'change'
@@ -49,8 +39,14 @@ export default {
 		}	
 	},
 	mounted() {
-		console.log(this.value)
+	
 	},
+	methods: {
+		sayHi(e){
+			console.log('hello mthfck',e.target)
+			//this.content.push(this.item)
+		}
+	}
 	
 }
 </script>

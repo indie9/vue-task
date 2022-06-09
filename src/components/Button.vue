@@ -78,8 +78,9 @@ export default {
   background-color: #D65D5D;
 }
 
-.disabled{
+.btn:disabled{
   background-color: #B5B5B5;
+  color: $label-text;
 }
 
 
